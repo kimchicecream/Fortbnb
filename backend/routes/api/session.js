@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
     const safeUser = {
         id: user.id,
         email: user.email,
-        username: user.username,
+        username: user.username
     };
 
     await setTokenCookie(res, safeUser);
@@ -44,6 +44,21 @@ router.post('/', async (req, res, next) => {
 router.delete('/', (_req, res) => {
     res.clearCookie('token');
     return res.json({ message: 'success' });
+});
+
+// RESTORE SESSION USER
+router.get('/', (req, res) => {
+    const { user } = req;
+    if (user) {
+        const safeUser = {
+            use: user.id,
+            email: user.email,
+            username: user.username
+        };
+        return res.json({
+            user: safeUser
+        });
+    } else return res.json({ user: null });
 });
 
 module.exports = router;
