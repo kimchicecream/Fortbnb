@@ -1,67 +1,67 @@
-# `AirBNB`
+# `FortBNB`
 
 ## Database Schema Design
+![db-schema](images/fortbnb-schema-design.png)
 
-CREATE TABLE Users (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  firstName VARCHAR(20) NOT NULL,
-  lastName VARCHAR(20) NOT NULL,
-  email VARCHAR(30) UNIQUE NOT NULL,
-  username VARCHAR(20) UNIQUE NOT NULL,
-  password VARCHAR(50) NOT NULL
-)
+Table Users {
+  id int [primary key]
+  firstName varchar
+  lastName varchar
+  email varchar
+  username varchar
+  hashedPassword varchar
+}
 
-CREATE TABLE Spots (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  ownerId INT NOT NULL,
-  address VARCHAR NOT NULL,
-  city VARCHAR NOT NULL,
-  state VARCHAR NOT NULL,
-  country VARCHAR NOT NULL,
-  latitude VARCHAR NOT NULL,
-  longitude VARCHAR NOT NULL,
-  name VARCHAR NOT NULL,
-  description TEXT,
-  price DECIMAL(10, 2) NOT NULL,
-  FOREIGN KEY (ownerId) REFERENCES Users(id)
-)
+Table Spots {
+  id int [primary key]
+  ownerId int
+  address varchar
+  city varchar
+  state varchar
+  country varchar
+  lat varchar
+  lng varchar
+  name varchar
+  description text
+  price decimal
+}
 
-CREATE TABLE Bookings (
-  id INT PRIMARY KET AUTO_INCREMENT,
-  spotId INT NOT NULL,
-  userId INT NOT NULL,
-  startDate DATE NOT NULL,
-  endDate DATE NOT NULL,
-  FOREIGN KEY (spotId) REFERENCES Spots(id),
-  FOREIGN KEY (userId) REFERENCES Users(id)
-)
+Table Bookings {
+  id int [primary key]
+  spotId int
+  userId int
+  startDate date
+  endDate date
+}
 
-CREATE TABLE Reviews (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  spotId INT NOT NULL,
-  userId INT NOT NULL,
-  review TEXT,
-  stars INT NOT NULL,
-  FOREIGN KEY (spotId) REFERENCES Spots(id),
-  FOREIGN KEY (userId) REFERENCES Users(id)
-)
+Table Reviews {
+  id int [primary key]
+  spotId int
+  userId int
+  review varchar
+  stars int
+}
 
-CREATE TABLE SpotImages (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  spotId INT NOT NULL,
-  url VARCHAR NOT NULL,
-  preview BOOLEAN NOT NULL
-  FOREIGN KEY (spotId) REFERENCES Spots(id)
-)
+Table SpotImages {
+  id int [primary key]
+  spotId int
+  url varchar
+  preview boolean
+}
 
-CREATE TABLE ReviewImages (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  reviewId INT NOT NULL,
-  url VARCHAR NOT NULL,
-  FOREIGN KEY (reviewId) REFERENCES Reviews(id)
-)
+Table ReviewImages {
+  id int [primary key]
+  reviewId int
+  url varchar
+}
 
-[db-schema]: ./images/schemaDiagram.png
+Ref: Spots.ownerId > Users.id
+Ref: Bookings.spotId > Spots.id
+Ref: Bookings.userId > Users.id
+Ref: Reviews.spotId > Spots.id
+Ref: Reviews.userId > Users.id
+Ref: SpotImages.spotId > Spots.id
+Ref: ReviewImages.reviewId > Reviews.id
 
 ## API Documentation
 
