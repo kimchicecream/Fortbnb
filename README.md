@@ -1,4 +1,4 @@
-# `FortBNB`
+# `FortBnB`
 
 ## Database Schema Design
 ![db-schema](images/fortbnb-schema-design.png)
