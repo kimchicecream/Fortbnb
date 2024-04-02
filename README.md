@@ -19,8 +19,8 @@ Table Spots {
   city varchar
   state varchar
   country varchar
-  lat varchar
-  lng varchar
+  lat decimal
+  lng decimal
   name varchar
   description text
   price decimal
