@@ -16,7 +16,6 @@ const app = express();
 
 // connect morgan middleware for logging info about requests and responses
 app.use(morgan('dev'));
-
 app.use(cookieParser());
 app.use(express.json());
 
@@ -46,9 +45,6 @@ app.use(
 
 // backend/app.js
 const routes = require('./routes');
-
-// ...
-
 app.use(routes); // connect all the routes
 
 app.use((_req, _res, next) => {
