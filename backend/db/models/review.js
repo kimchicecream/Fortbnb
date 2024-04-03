@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    stars: DataTypes.INTEGER
+    stars: DataTypes.INTEGER,
+    avgRating: DataTypes.FLOAT
   }, {
     sequelize,
     modelName: 'Review',
