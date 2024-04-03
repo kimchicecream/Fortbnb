@@ -51,48 +51,49 @@ router.get('/', async (req, res) => {
 });
 
 // Get all Spots owned by the Current User
-router.get('/', requireAuth, async (req, res) => {
-    const userId = req.user.id;
+router.get('/current', requireAuth, async (req, res) => {
+        const userId = req.user.id;
+        const spots = await Spot.findAll({
+            where: { ownerId: userId },
+            include: [
+                {
+                    model: Review,
+                    attributes: [
+                        [sequelize.literal('AVG("Reviews"."stars")'), 'avgRating']
+                    ],
+                    required: false
+                },
+                {
+                    model: SpotImage,
+                    where: { preview: true },
+                    attributes: ['url'],
+                    required: false
+                }
+            ],
+            group: ['Spot.id', 'Reviews.id', 'SpotImages.id'] // group to avoid dupe
+        });
 
-    const spots = await Spot.findAll({
-        where: { ownerId: userId },
-        include: [
-            {
-                model: Review,
-                attributes: [
-                    [sequelize.literal('AVG("Reviews"."stars")'), 'avgRating']
-                ]
-            },
-            {
-                model: SpotImage,
-                where: { preview: true },
-                attributes: ['url']
-            }
-        ],
-        group: ['Spot.id', 'Reviews.id', 'SpotImages.id'] // group to avoid dupe
-    });
+        const formattedSpots = spots.map(spot => ({
+            id: spot.id,
+            ownerId: spot.ownerId,
+            address: spot.address,
+            city: spot.city,
+            state: spot.state,
+            country: spot.country,
+            lat: spot.lat,
+            lng: spot.lng,
+            name: spot.name,
+            description: spot.description,
+            price: spot.price,
+            createdAt: spot.createdAt,
+            updatedAt: spot.updatedAt,
+            avgRating: spot.Reviews[0]?.dataValues.avgRating || null,
+            previewImage: spot.SpotImages[0]?.url || null,
+        }));
 
-    const formattedSpots = spots.map(spot => ({
-        id: spot.id,
-        ownerId: spot.ownerId,
-        address: spot.address,
-        city: spot.city,
-        state: spot.state,
-        country: spot.country,
-        lat: spot.lat,
-        lng: spot.lng,
-        name: spot.name,
-        description: spot.description,
-        price: spot.price,
-        createdAt: spot.createdAt,
-        updatedAt: spot.updatedAt,
-        avgRating: spot.Reviews[0]?.dataValues.avgRating || null,
-        previewImage: spot.SpotImages[0]?.url || null
-    }));
-
-    res.status(200).json({
-        Spots: formattedSpots
-    });
+        res.status(200).json({
+            Spots: formattedSpots
+        });
 });
 
 // Get details of a Spot from an id
