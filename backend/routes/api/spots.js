@@ -61,14 +61,12 @@ router.get('/', requireAuth, async (req, res) => {
                 model: Review,
                 attributes: [
                     [sequelize.literal('AVG("Reviews"."stars")'), 'avgRating']
-                ],
-                required: false
+                ]
             },
             {
                 model: SpotImage,
                 where: { preview: true },
-                attributes: ['url'],
-                required: false
+                attributes: ['url']
             }
         ],
         group: ['Spot.id', 'Reviews.id', 'SpotImages.id'] // group to avoid dupe
