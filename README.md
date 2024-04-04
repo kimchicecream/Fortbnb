@@ -346,7 +346,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/my-spots
+  * URL: /api/current
   * Body: none
 
 * Successful Response
@@ -693,7 +693,7 @@ Returns all the reviews written by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /api/reviews/current-user
+  * URL: /api/reviews/current
   * Body: none
 
 * Successful Response
@@ -804,7 +804,7 @@ Create and return a new review for a spot specified by id.
 * Require Authentication: true
 * Request
   * Method: POST
-  * URL: /api/spots/:spotId/review
+  * URL: /api/spots/:spotId/reviews
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -863,7 +863,7 @@ Create and return a new review for a spot specified by id.
     ```
 
 * Error response: Review from the current user already exists for the Spot
-  * Status Code: 500
+  * Status Code: 403
   * Headers:
     * Content-Type: application/json
   * Body:
