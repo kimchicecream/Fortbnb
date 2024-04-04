@@ -12,9 +12,7 @@ router.get('/', async (req, res) => {
         include: [
             {
                 model: Review,
-                attributes: [
-                    [sequelize.literal('AVG("Reviews"."stars")'), 'avgRating']
-                ],
+                attributes: ['stars'],
                 required: false
             },
             {
@@ -41,7 +39,7 @@ router.get('/', async (req, res) => {
         price: spot.price,
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt,
-        avgRating: spot.Reviews[0]?.dataValues.avgRating || null,
+        avgRating: calculateAvgRating(spot.Reviews),
         previewImage: spot.SpotImages[0]?.url || null
     }));
 
@@ -58,9 +56,7 @@ router.get('/current', requireAuth, async (req, res) => {
             include: [
                 {
                     model: Review,
-                    attributes: [
-                        [sequelize.literal('AVG("Reviews"."stars")'), 'avgRating']
-                    ],
+                    attributes: ['stars'],
                     required: false
                 },
                 {
@@ -87,7 +83,7 @@ router.get('/current', requireAuth, async (req, res) => {
             price: spot.price,
             createdAt: spot.createdAt,
             updatedAt: spot.updatedAt,
-            avgRating: spot.Reviews[0]?.dataValues.avgRating || null,
+            avgRating: calculateAvgRating(spot.Reviews),
             previewImage: spot.SpotImages[0]?.url || null,
         }));
 
@@ -95,6 +91,13 @@ router.get('/current', requireAuth, async (req, res) => {
             Spots: formattedSpots
         });
 });
+
+function calculateAvgRating(reviews) {
+    if (!reviews || reviews.length === 0) return null;
+
+    const totalStars = reviews.reduce((sum, review) => sum + review.stars, 0);
+    return totalStars / reviews.length;
+};
 
 // Get details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
