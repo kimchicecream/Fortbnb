@@ -198,7 +198,8 @@ const validateSpotCreation = [
         .exists({ checkFalsy: true })
         .withMessage('Price per day is required')
         .isNumeric()
-        .withMessage('Price must be a number'),
+        .withMessage('Price must be a number')
+        .isInt('Price must be a valid positive integer'),
     handleValidationErrors
 ]
 
