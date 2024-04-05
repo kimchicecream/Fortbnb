@@ -67,8 +67,86 @@ router.get('/current', requireAuth, async (req, res) => {
 });
 
 // Add an Image to a Review based on the Review's id
-// router.post
+router.post('/:reviewId/images', requireAuth, async (req, res) => {
+    const { reviewId } = req.params;
+    const { url } = req.body;
+    const userId = req.user.id;
 
+    const review = await Review.findOne({
+        where: { id: reviewId, userId }
+    });
+    if (!review) {
+        res.status(404).json({
+            message: "Review couldn't be found"
+        });
+    }
 
+    const imageCount = await ReviewImage.count({
+        where: { reviewId }
+    });
+    if (imageCount >= 10) {
+        res.status(403).json({
+            message: 'Maximum number of images for this resource was reached'
+        });
+    }
+
+    const newImage = await ReviewImage.create({ reviewId, url });
+    res.status(200).json({
+        id: newImage.id, url: newImage.url
+    });
+});
+
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
+// Edit a Review
+router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
+    const { reviewId } = req.params;
+    const { review, stars } = req.body;
+    const userId = req.user.id;
+
+    const reviewExists = await Review.findOne({
+        where: { id: reviewId, userId }
+    });
+    if (!reviewExists) {
+        res.status(404).json({
+            message: "Review couldn't be found"
+        });
+    }
+
+    reviewExists.review = review;
+    reviewExists.stars = stars;
+    await reviewExists.save();
+
+    res.status(200).json(reviewExists);
+});
+
+// Delete a Review
+router.delete('/:reviewId', requireAuth, async (req, res) => {
+    const { reviewId } = req.params;
+    const userId = req.user.id;
+
+    const reviewExists = await Review.findOne({
+        where: { id: reviewId, userId }
+    });
+    if (!reviewExists) {
+        res.status(404).json({
+            message: "Review couldn't be found"
+        });
+    }
+
+    await reviewExists.destroy();
+
+    res.status(200).json({
+        message: 'Successfully deleted'
+    });
+});
 
 module.exports = router;
