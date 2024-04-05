@@ -232,11 +232,11 @@ router.post('/', requireAuth, validateSpotCreation, async (req, res) => {
         city: spot.city,
         state: spot.state,
         country: spot.country,
-        lat: formattedLat, // Use the formatted lat
-        lng: formattedLng, // Use the formatted lng
+        lat: formattedLat,
+        lng: formattedLng,
         name: spot.name,
         description: spot.description,
-        price: formattedPrice, // Use the formatted price
+        price: formattedPrice,
         createdAt: spot.createdAt,
         updatedAt: spot.updatedAt
     });
@@ -428,8 +428,17 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
         review,
         stars
     });
+
+    const formattedSpotId = parseInt(spotId);
+
     return res.status(201).json({
-        newReview
+        id: newReview.id,
+        userId: newReview.userId,
+        spotId: formattedSpotId,
+        review: newReview.review,
+        stars: newReview.stars,
+        createdAt: newReview.createdAt,
+        updatedAt: newReview.updatedAt
     });
 });
 
