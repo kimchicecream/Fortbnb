@@ -199,7 +199,8 @@ const validateSpotCreation = [
         .withMessage('Price per day is required')
         .isNumeric()
         .withMessage('Price must be a number')
-        .isInt('Price must be a valid positive integer'),
+        .isInt({ min: 1 })
+        .withMessage('Price must be a valid positive integer'),
     handleValidationErrors
 ]
 
