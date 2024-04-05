@@ -207,12 +207,38 @@ const validateSpotCreation = [
 // Create a spot
 router.post('/', requireAuth, validateSpotCreation, async (req, res) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    const formattedLat = parseFloat(lat);
+    const formattedLng = parseFloat(lng);
+    const formattedPrice = parseFloat(price);
+
     const spot = await Spot.create({
-        ownerId: req.user.id, address, city, state, country, lat, lng, name, description, price
+        ownerId: req.user.id,
+        address,
+        city,
+        state,
+        country,
+        lat: formattedLat,
+        lng: formattedLng,
+        name,
+        description,
+        price: formattedPrice
     });
 
     return res.status(201).json({
-        spot
+        id: spot.id,
+        ownerId: spot.ownerId,
+        address: spot.address,
+        city: spot.city,
+        state: spot.state,
+        country: spot.country,
+        lat: formattedLat, // Use the formatted lat
+        lng: formattedLng, // Use the formatted lng
+        name: spot.name,
+        description: spot.description,
+        price: formattedPrice, // Use the formatted price
+        createdAt: spot.createdAt,
+        updatedAt: spot.updatedAt
     });
 });
 
