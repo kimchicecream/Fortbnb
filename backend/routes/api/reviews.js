@@ -55,10 +55,10 @@ router.get('/current', requireAuth, async (req, res) => {
                 price: review.Spot.price,
                 previewImage: review.Spot.previewImage || null
             },
-            ReviewImages: [{
-                id: ReviewImage.id || null,
-                url: ReviewImage.url || null
-            }]
+            ReviewImages: review.ReviewImages.map(image => ({
+                id: image.id,
+                url: image.url
+            }))
         }));
 
         res.status(200).json({
