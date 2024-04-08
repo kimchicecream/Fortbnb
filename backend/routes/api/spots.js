@@ -390,6 +390,12 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 router.get('/:spotId/reviews', async (req, res) => {
     const { spotId } = req.params;
 
+    if (!spotId) {
+        res.status(404).json({
+            message: "Spot couldn't be found"
+        });
+    }
+
     const reviews = await Review.findAll({
         where: { spotId },
         include: [
@@ -403,12 +409,6 @@ router.get('/:spotId/reviews', async (req, res) => {
             }
         ]
     });
-
-    if (!spotId) {
-        res.status(404).json({
-            message: "Spot couldn't be found"
-        });
-    }
 
     const formattedReviews = reviews.map(review => ({
         id: review.id,
