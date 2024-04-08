@@ -10,44 +10,26 @@ const router = express.Router();
 
 const queryValidations = [
     check('page')
+        .optional({ nullable: true })
         .isInt({ min: 1 })
         .withMessage('Page must be greater than or equal to 1')
         .isInt({ max: 10 })
-        .withMessage('10 is the maximum'),
+        .withMessage('Page must be less than or equal to 10'),
     check('size')
+        .optional({ nullable: true })
         .isInt({ min: 1 })
         .withMessage('Size must be greater than or equal to 1')
         .isInt({ max: 20 })
-        .withMessage('20 is the maximum'),
-    check('maxLat')
-        .optional()
-        .isDecimal()
-        .withMessage('Maximum latitude is invalid'),
-    check('minLat')
-        .optional()
-        .isDecimal()
-        .withMessage('Minimum latitude is invalid'),
-    check('minLng')
-        .optional()
-        .isDecimal()
-        .withMessage('Minimum longitude is invalid'),
-    check('maxLng')
-        .optional()
-        .isDecimal()
-        .withMessage('Maximum longitude is invalid'),
-    check('minPrice')
-        .optional()
-        .isDecimal({ min: 0 })
-        .withMessage('Minimum price must be greater than or equal to 0'),
-    check('maxPrice')
-        .optional()
-        .isDecimal({ min: 0 })
-        .withMessage('Maximum price must be greater than or equal to 0'),
+        .withMessage('Size must be less than or equal to 20'),
     handleValidationErrors
 ]
-
 // Get all spots /api/spots
 router.get('/', queryValidations, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     const page = parseInt(req.query.page) || 1;
     const size = parseInt(req.query.size) || 20;
 
@@ -70,7 +52,10 @@ router.get('/', queryValidations, async (req, res) => {
         group: ['Spot.id', 'Reviews.id', 'SpotImages.id'] // group to avoid dupe
     });
 
-    const formattedSpots = spots.map(spot => ({
+
+    const paginatedSpots = spots.slice(offset, offset + size);
+
+    const formattedSpots = paginatedSpots.map(spot => ({
         id: spot.id,
         ownerId: spot.ownerId,
         address: spot.address,
