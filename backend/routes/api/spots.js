@@ -8,8 +8,51 @@ const { Op } = Sequelize;
 
 const router = express.Router();
 
+const queryValidations = [
+    check('page')
+        .isInt({ min: 1 })
+        .withMessage('Page must be greater than or equal to 1')
+        .isInt({ max: 10 })
+        .withMessage('10 is the maximum'),
+    check('size')
+        .isInt({ min: 1 })
+        .withMessage('Size must be greater than or equal to 1')
+        .isInt({ max: 20 })
+        .withMessage('20 is the maximum'),
+    check('maxLat')
+        .optional()
+        .isDecimal()
+        .withMessage('Maximum latitude is invalid'),
+    check('minLat')
+        .optional()
+        .isDecimal()
+        .withMessage('Minimum latitude is invalid'),
+    check('minLng')
+        .optional()
+        .isDecimal()
+        .withMessage('Minimum longitude is invalid'),
+    check('maxLng')
+        .optional()
+        .isDecimal()
+        .withMessage('Maximum longitude is invalid'),
+    check('minPrice')
+        .optional()
+        .isDecimal({ min: 0 })
+        .withMessage('Minimum price must be greater than or equal to 0'),
+    check('maxPrice')
+        .optional()
+        .isDecimal({ min: 0 })
+        .withMessage('Maximum price must be greater than or equal to 0'),
+    handleValidationErrors
+]
+
 // Get all spots /api/spots
-router.get('/', async (req, res) => {
+router.get('/', queryValidations, async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const size = parseInt(req.query.size) || 20;
+
+    const offset = (page - 1) * size;
+
     const spots = await Spot.findAll({
         include: [
             {
@@ -46,7 +89,9 @@ router.get('/', async (req, res) => {
     }));
 
     res.json({
-        Spots: formattedSpots
+        Spots: formattedSpots,
+        page: page,
+        size: size
     });
 });
 
@@ -660,69 +705,35 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
     });
 });
 
-const queryValidations = [
-    check('page')
-        .isInt({ min: 1 })
-        .withMessage('Page must be greater than or equal to 1'),
-    check('size')
-        .isInt({ min: 1 })
-        .withMessage('Size must be greater than or equal to 1'),
-    check('maxLat')
-        .optional()
-        .isDecimal()
-        .withMessage('Maximum latitude is invalid'),
-    check('minLat')
-        .optional()
-        .isDecimal()
-        .withMessage('Minimum latitude is invalid'),
-    check('minLng')
-        .optional()
-        .isDecimal()
-        .withMessage('Minimum longitude is invalid'),
-    check('maxLng')
-        .optional()
-        .isDecimal()
-        .withMessage('Maximum longitude is invalid'),
-    check('minPrice')
-        .optional()
-        .isDecimal({ min: 0 })
-        .withMessage('Minimum price must be greater than or equal to 0'),
-    check('maxPrice')
-        .optional()
-        .isDecimal({ min: 0 })
-        .withMessage('Maximum price must be greater than or equal to 0'),
-    handleValidationErrors
-]
-
 // Add Query Filters to get all Spots
-router.get('/', queryValidations, async (req, res) => {
-    let { page, size} = req.query;
+// router.get('/', queryValidations, async (req, res) => {
+//     let { page, size} = req.query;
 
-    page = parseInt(page) || 1;
-    size = parseInt(size) || 20;
+//     page = parseInt(page) || 1;
+//     size = parseInt(size) || 20;
 
-    // const where = {};
-    // if (minLat && maxLat) where.lat = { [Op.between]: [minLat, maxLat] };
-    // if (minLng && maxLng) where.lng = { [Op.between]: [minLng, maxLng] };
-    // if (minPrice && maxPrice) where.price = { [Op.between]: [minPrice, maxPrice] };
+//     // const where = {};
+//     // if (minLat && maxLat) where.lat = { [Op.between]: [minLat, maxLat] };
+//     // if (minLng && maxLng) where.lng = { [Op.between]: [minLng, maxLng] };
+//     // if (minPrice && maxPrice) where.price = { [Op.between]: [minPrice, maxPrice] };
 
-    // const offset = (page - 1) * size;
-    // const spots = await Spot.findAll({
-    //     where,
-    //     limit: size,
-    //     offset
-    // });
+//     // const offset = (page - 1) * size;
+//     // const spots = await Spot.findAll({
+//     //     where,
+//     //     limit: size,
+//     //     offset
+//     // });
 
-    const spots = await Spot.findAll({
-        offset: (page - 1) * size,
-        limit: size
-    });
+//     const spots = await Spot.findAll({
+//         offset: (page - 1) * size,
+//         limit: size
+//     })
 
-    res.status(200).json({
-        Spots: spots,
-        page: page,
-        size: size
-    });
-});
+//     res.status(200).json({
+//         Spots: spots,
+//         page: page,
+//         size: size
+//     });
+// });
 
 module.exports = router;

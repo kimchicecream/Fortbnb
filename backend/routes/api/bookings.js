@@ -125,7 +125,7 @@ const validateBookingDates = [
     handleValidationErrors
 ];
 
-router.put('/:bookingId', validateBookingDates, requireAuth, async (req, res) => {
+router.put('/:bookingId', requireAuth, validateBookingDates, async (req, res) => {
     const userId = req.user.id;
     const { bookingId } = req.params;
     const { startDate, endDate } = req.body;
