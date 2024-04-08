@@ -423,10 +423,10 @@ router.get('/:spotId/reviews', async (req, res) => {
             firstName: review.User.firstName,
             lastName: review.User.lastName
         },
-        ReviewImages: [{
-            id: ReviewImage.id || null,
-            url: ReviewImage.url || null
-        }]
+        ReviewImages: review.ReviewImages.map(image => ({
+            id: image.id,
+            url: image.url
+        }))
     }));
 
     res.status(200).json({
