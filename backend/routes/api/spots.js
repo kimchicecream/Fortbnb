@@ -1,7 +1,7 @@
 const express = require('express');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking} = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
@@ -180,12 +180,26 @@ const validateSpotCreation = [
         .exists({ checkFalsy: true })
         .withMessage('Latitude is required')
         .isNumeric()
-        .withMessage('Latitude is not valid'),
+        .withMessage('Latitude is not valid')
+        .custom((value) => {
+            const latitude = parseFloat(value);
+            if (latitude < -90 || latitude > 90) {
+                throw new Error('Latitude must be within -90 to 90');
+            }
+            return true;
+        }),
     check('lng')
         .exists({ checkFalsy: true })
         .withMessage('Longitude is required')
         .isNumeric()
-        .withMessage('Longitude is not valid'),
+        .withMessage('Longitude is not valid')
+        .custom((value) => {
+            const longitude = parseFloat(value);
+            if (longitude < -180 || longitude > 180) {
+                throw new Error('Longitude must be within -180 to 180');
+            }
+            return true;
+        }),
     check('name')
         .exists({ checkFalsy: true })
         .withMessage('Name is required')
@@ -360,7 +374,7 @@ router.get('/:spotId/reviews', async (req, res) => {
         ]
     });
 
-    if (!reviews || reviews.length === 0) {
+    if (!spotId) {
         res.status(404).json({
             message: "Spot couldn't be found"
         });
@@ -446,7 +460,14 @@ const validateBookingDates = [
     check('startDate')
         .toDate()
         .isISO8601()
-        .withMessage('Invalid start date format'),
+        .withMessage('Invalid start date format')
+        .custom((value) => {
+            const currentDate = new Date();
+            if (new Date(value) < currentDate) {
+                throw new Error('Start date cannot be in the past');
+            }
+            return true;
+        }),
     check('endDate')
         .toDate()
         .isISO8601()
@@ -460,10 +481,41 @@ const validateBookingDates = [
                 throw new Error('End date must be after the start date');
             }
             return true;
+        })
+        .custom((value, { req }) => {
+            const startDate = req.body.startDate;
+            const endDate = new Date(value);
+            if (startDate === value) {
+                throw new Error('Start and end date cannot be the same');
+            }
+            if (endDate <= new Date(startDate)) {
+                throw new Error('End date cannot be before start date');
+            }
+            return true;
         }),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const errorMessages = errors.array().map(error => error.msg);
+            if (errorMessages.includes('Start and end date cannot be the same') || errorMessages.includes('End date cannot be before start date')) {
+                return res.status(400).json({
+                    message: 'Bad Request',
+                    errors: {
+                        endDate: 'endDate cannot be on or before startDate'
+                    }
+                });
+            }
+            return res.status(400).json({
+                message: 'Bad request',
+                errors: {
+                    startDate: 'startDate cannot be in the past'
+                }
+            });
+        }
+        next();
+    },
     handleValidationErrors
 ];
-
 
 // Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, validateBookingDates, async (req, res) => {
@@ -484,14 +536,31 @@ router.post('/:spotId/bookings', requireAuth, validateBookingDates, async (req, 
         });
     }
 
-    const bookingExists = await Booking.findOne({
+    const existingBooking = await Booking.findOne({
         where: {
             spotId,
-            startDate: { [Op.lte]: new Date(startDate) },
-            endDate: { [Op.gte]: new Date(endDate) }
+            [Op.or]: [
+                {
+                    startDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+                {
+                    endDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+                {
+                    [Op.and]: [
+                        { startDate: { [Op.lte]: startDate } },
+                        { endDate: { [Op.gte]: endDate } }
+                    ]
+                }
+            ]
         }
     });
-    if (bookingExists) {
+
+    if (existingBooking) {
         return res.status(403).json({
             message: "Sorry, this spot is already booked for the specified dates",
             errors: {
@@ -515,6 +584,7 @@ router.post('/:spotId/bookings', requireAuth, validateBookingDates, async (req, 
     booking.endDate = formattedEndDate;
 
     const bookingConfirmation = {
+        id: booking.id,
         spotId: booking.spotId,
         userId: booking.userId,
         startDate: formattedStartDate,
@@ -626,27 +696,32 @@ const queryValidations = [
 
 // Add Query Filters to get all Spots
 router.get('/', queryValidations, async (req, res) => {
-    let { page = 1, size = 20, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    let { page, size} = req.query;
 
-    page = parseInt(page);
-    size = parseInt(size);
+    page = parseInt(page) || 1;
+    size = parseInt(size) || 20;
 
-    const query = {};
-    if (minLat && maxLat) query.lat = { [Op.between]: [minLat, maxLat] };
-    if (minLng && maxLng) query.lng = { [Op.between]: [minLng, maxLng] };
-    if (minPrice && maxPrice) query.price = { [Op.between]: [minPrice, maxPrice] };
+    // const where = {};
+    // if (minLat && maxLat) where.lat = { [Op.between]: [minLat, maxLat] };
+    // if (minLng && maxLng) where.lng = { [Op.between]: [minLng, maxLng] };
+    // if (minPrice && maxPrice) where.price = { [Op.between]: [minPrice, maxPrice] };
 
-    const offset = (page - 1) * size;
+    // const offset = (page - 1) * size;
+    // const spots = await Spot.findAll({
+    //     where,
+    //     limit: size,
+    //     offset
+    // });
+
     const spots = await Spot.findAll({
-        where: query,
-        limit: size,
-        offset: offset
+        offset: (page - 1) * size,
+        limit: size
     });
 
     res.status(200).json({
         Spots: spots,
-        page: parseInt(page),
-        size: parseInt(size)
+        page: page,
+        size: size
     });
 });
 

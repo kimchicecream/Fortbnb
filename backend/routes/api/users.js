@@ -13,33 +13,15 @@ const validateSignup = [
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.')
-        .custom(async (email) => {
-            const user = await User.findOne({ where: { email } });
-            if (user) {
-                throw new Error('User with that email already exists');
-            }
-            return true;
-        }),
+        .withMessage('Please provide a valid email.'),
     check('username')
         .exists({ checkFalsy: true })
         .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.')
-        .custom(async (username) => {
-            const user = await User.findOne({ where: { username } });
-            if (user) {
-                throw new Error('User with that username already exists');
-            }
-            return true;
-        }),
+        .withMessage('Please provide a username with at least 4 characters.'),
     check('username')
         .not()
         .isEmail()
         .withMessage('Username cannot be an email.'),
-    check('password')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
     check('firstName')
         .exists({ checkFalsy: true })
         .withMessage('Please provide your first name.')
@@ -57,6 +39,22 @@ const validateSignup = [
 router.post('/', validateSignup, async (req, res) => {
     const { email, password, username, firstName, lastName } = req.body;
     const hashedPassword = bcrypt.hashSync(password);
+
+    const userWithEmail = await User.findOne({ where: { email } });
+    if (userWithEmail) {
+        return res.status(500).json({
+            message: 'User already exists',
+            errors: { email: 'User with that email already exists' }
+        });
+    }
+
+    const userWithUsername = await User.findOne({ where: { username } });
+    if (userWithUsername) {
+        return res.status(500).json({
+            message: 'User already exists',
+            errors: { username: 'User with that username already exists' }
+        });
+    }
 
     const user = await User.create({ email, username, hashedPassword, firstName, lastName });
 

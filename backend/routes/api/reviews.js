@@ -73,11 +73,17 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     const userId = req.user.id;
 
     const review = await Review.findOne({
-        where: { id: reviewId, userId }
+        where: { id: reviewId }
     });
     if (!review) {
         res.status(404).json({
             message: "Review couldn't be found"
+        });
+    }
+
+    if (review.userId !== userId) {
+        return res.status(403).json({
+            message: 'You are not authorized to add an image to this review'
         });
     }
 
@@ -113,11 +119,17 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res) => {
     const userId = req.user.id;
 
     const reviewExists = await Review.findOne({
-        where: { id: reviewId, userId }
+        where: { id: reviewId }
     });
     if (!reviewExists) {
         res.status(404).json({
             message: "Review couldn't be found"
+        });
+    }
+
+    if (review.userId !== userId) {
+        return res.status(403).json({
+            message: 'You are not authorized to make changes to this review'
         });
     }
 
@@ -133,16 +145,22 @@ router.delete('/:reviewId', requireAuth, async (req, res) => {
     const { reviewId } = req.params;
     const userId = req.user.id;
 
-    const reviewExists = await Review.findOne({
-        where: { id: reviewId, userId }
+    const review = await Review.findOne({
+        where: { id: reviewId }
     });
-    if (!reviewExists) {
+    if (!review) {
         res.status(404).json({
             message: "Review couldn't be found"
         });
     }
 
-    await reviewExists.destroy();
+    if (review.userId !== userId) {
+        return res.status(403).json({
+            message: 'You are not authorized to delete this review'
+        });
+    }
+
+    await review.destroy();
 
     res.status(200).json({
         message: 'Successfully deleted'

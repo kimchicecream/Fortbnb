@@ -43,7 +43,7 @@ module.exports = {
         state: 'Manhanttan',
         country: 'United States Of America',
         lat: 66.2324222,
-        lng: -333.3333333,
+        lng: -150.3333333,
         name: 'Trump Tower',
         description: 'Soda',
         price: 80000
@@ -54,7 +54,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'Spots';
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['App Academy', 'Apartment', 'Trump Tower'] }
+      name: { [Sequelize.Op.in]: ['App Academy', 'Apartment', 'Trump Tower'] }
     }, {});
   }
 };

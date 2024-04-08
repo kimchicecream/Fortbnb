@@ -1,8 +1,7 @@
 'use strict';
 
-const { Review, sequelize } = require('../models');
+const { Review } = require('../models');
 const bcrypt = require("bcryptjs");
-const { Op } = require('sequelize');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -22,14 +21,14 @@ module.exports = {
       {
         userId: 2,
         spotId: 2,
-        review: 'Would come here again.',
-        stars: 5
+        review: 'Would not come here again.',
+        stars: 2
       },
       {
         userId: 3,
         spotId: 3,
-        review: 'How did this place get 5 star ratings before?! I had to worst experience!',
-        stars: 1
+        review: 'Could be better.',
+        stars: 4
       }
     ], { validate: true });
   },
@@ -37,7 +36,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'Reviews';
     return queryInterface.bulkDelete(options, {
-      stars: { [Op.in]: [1, 2, 3, 4, 5] }
+      stars: { [Sequelize.Op.in]: [1, 2, 3, 4, 5] }
     }, {});
   }
 };

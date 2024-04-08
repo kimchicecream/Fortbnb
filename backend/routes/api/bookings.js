@@ -1,7 +1,7 @@
 const express = require('express');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking} = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { Sequelize } = require('sequelize');
 const { Op } = require('sequelize');
@@ -64,7 +64,68 @@ router.get('/current', requireAuth, async (req, res) => {
     });
 });
 
-router.put('/:bookingId', requireAuth, async (req, res) => {
+const validateBookingDates = [
+    check('startDate')
+        .toDate()
+        .isISO8601()
+        .withMessage('Invalid start date format')
+        .custom((value) => {
+            const currentDate = new Date();
+            if (new Date(value) < currentDate) {
+                throw new Error('Start date cannot be in the past');
+            }
+            return true;
+        }),
+    check('endDate')
+        .toDate()
+        .isISO8601()
+        .withMessage('Invalid end date format')
+        .custom((value, { req }) => {
+            const startDate = req.body.startDate;
+            if (!startDate) {
+                throw new Error('Start date is required');
+            }
+            if (new Date(startDate) >= new Date(value)) {
+                throw new Error('End date must be after the start date');
+            }
+            return true;
+        })
+        .custom((value, { req }) => {
+            const startDate = req.body.startDate;
+            const endDate = new Date(value);
+            if (startDate === value) {
+                throw new Error('Start and end date cannot be the same');
+            }
+            if (endDate <= new Date(startDate)) {
+                throw new Error('End date cannot be before start date');
+            }
+            return true;
+        }),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const errorMessages = errors.array().map(error => error.msg);
+            if (errorMessages.includes('Start and end date cannot be the same') || errorMessages.includes('End date cannot be before start date')) {
+                return res.status(400).json({
+                    message: 'Bad Request',
+                    errors: {
+                        endDate: 'endDate cannot be on or before startDate'
+                    }
+                });
+            }
+            return res.status(400).json({
+                message: 'Bad request',
+                errors: {
+                    startDate: 'startDate cannot be in the past'
+                }
+            });
+        }
+        next();
+    },
+    handleValidationErrors
+];
+
+router.put('/:bookingId', validateBookingDates, requireAuth, async (req, res) => {
     const userId = req.user.id;
     const { bookingId } = req.params;
     const { startDate, endDate } = req.body;
@@ -85,7 +146,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
         });
     }
 
-    const currentDate = new Date('2021-05-01');
+    const currentDate = new Date();
     if (new Date(booking.endDate) < currentDate) {
         return res.status(400).json({
             message: "Past bookings can't be modified"
@@ -97,8 +158,22 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
             id: { [Op.ne]: bookingId },
             spotId: booking.spotId,
             [Op.or]: [
-                { startDate: { [Op.between]: [startDate, endDate] } },
-                { endDate: { [Op.between]: [startDate, endDate] } }
+                {
+                    startDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+                {
+                    endDate: {
+                        [Op.between]: [startDate, endDate]
+                    }
+                },
+                {
+                    [Op.and]: [
+                        { startDate: { [Op.lte]: startDate } },
+                        { endDate: { [Op.gte]: endDate } }
+                    ]
+                }
             ]
         }
     });
@@ -119,8 +194,8 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
     res.status(200).json({
         id: booking.id,
-        userId: booking.userId,
         spotId: booking.spotId,
+        userId: booking.userId,
         startDate: booking.startDate.toISOString().split('T')[0],
         endDate: booking.endDate.toISOString().split('T')[0],
         createdAt: booking.createdAt,
