@@ -7,6 +7,8 @@ const bookingsRouter = require('./bookings.js');
 const spotImagesRouter = require('./spotimages.js');
 const reviewImagesRouter = require('./reviewimages.js')
 const { restoreUser, requireAuth } = require('../../utils/auth.js');
+const { setTokenCookie } = require('../../utils/auth.js');
+const { User } = require('../../db/models');
 
 router.use(restoreUser);
 
@@ -18,9 +20,22 @@ router.use('/bookings', bookingsRouter);
 router.use('/spot-images', spotImagesRouter);
 router.use('/review-images', reviewImagesRouter);
 
+router.get('/set-token-cookie', async (_req, res) => {
+  const user = await User.findOne({
+    where: {
+      username: 'Demo-lition'
+    }
+  });
+  setTokenCookie(res, user);
+  return res.json({ user: user });
+});
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
+});
+
+router.get('/require-auth', requireAuth, (req, res) => {
+  return res.json(req.user)
 });
 
 module.exports = router;
