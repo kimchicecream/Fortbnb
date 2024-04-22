@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots, selectAllSpots } from '../../store/spots.js';
-// import { getAllReviews, selectAllReviews } from '../../store/reviews.js';
+import SpotItem from '../SpotItem';
 
 import './Home.css';
 
-function Home({ prop }) {
+function Home() {
     // const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const spots = useSelector(selectAllSpots);
@@ -22,10 +22,7 @@ function Home({ prop }) {
             </div>
             <div className='spots-container'>
                 {spots.map(spot => (
-                    <li key={spot.id}>
-                        <h3>{spot.name}</h3>
-                        {/* <p>{spot.price}</p> */}
-                    </li>
+                    <SpotItem key={spot.id} spot={spot} />
                 ))}
             </div>
         </div>

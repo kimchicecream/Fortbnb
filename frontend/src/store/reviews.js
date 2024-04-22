@@ -29,9 +29,9 @@ export const getAllReviews = () => async dispatch => {
     }
 }
 
-export const getReviewById = () => async dispatch => {
+export const getReviewById = reviewId => async dispatch => {
     try {
-        const response = await csrfFetch(`/api/spots/${spotId}`);
+        const response = await csrfFetch(`/api/reviews/${reviewId}`);
         const review = await response.json();
         dispatch(addReviews([review]));
         return review;
@@ -55,7 +55,7 @@ export const addReview = (spotId, review) => async dispatch => {
     }
 }
 
-export const addReviewImage = (reviewId, image) => async dispatch => {
+export const addReviewImage = (reviewId, image) => async () => {
     try {
         const response = await csrfFetch(`/api/reviews/${reviewId}/images`, {
             method: 'POST',
@@ -94,7 +94,7 @@ function reviewsReducer(state = initialState, action) {
         case ADD_REVIEWS: {
             const newState = { ...state };
             action.reviews.forEach(review => newState[review.id] = review);
-            return newReview;
+            return newState;
         }
         case REMOVE_REVIEW: {
             if (state[action.reviewId] === undefined) return state;

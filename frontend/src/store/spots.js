@@ -28,7 +28,6 @@ const addReviewToSpot = (spotId, reviews) => ({
 
 export const getAllSpots = () => async dispatch => {
     const response = await csrfFetch('/api/spots');
-
     if (response.ok) {
         const spots = await response.json();
         dispatch(loadSpots(spots));
@@ -117,7 +116,7 @@ export const deleteSpot = (spotId) => async dispatch => {
 
 export const selectSpots = state => state.spots;
 
-export const selectAllSpots = createSelector(selectSpots, spots => {
+export const selectAllSpots = createSelector(selectSpots, (spots) => {
     console.log('Current state of spots:', spots);
     return spots ? Object.values(spots) : [];
 });
@@ -126,19 +125,22 @@ const initialState = {};
 
 function spotsReducer(state = initialState, action) {
     switch(action.type) {
-        case LOAD_SPOTS:
+        case LOAD_SPOTS: {
             const newState = { ...state };
             action.spots.forEach(spot => newState[spot.id] = spot);
             return newState;
-        case REMOVE_SPOT:
+        }
+        case REMOVE_SPOT: {
             const updatedState = { ...state };
             delete updatedState[action.spotId];
             return updatedState;
-        case ADD_REVIEW_TO_SPOT:
+        }
+        case ADD_REVIEW_TO_SPOT: {
             if (!state[action.spotId]) return state;
             const newStateWithReview = { ...state };
             newStateWithReview[action.spotId].Reviews = action.reviews;
             return newStateWithReview;
+        }
         default:
             return state;
     }
