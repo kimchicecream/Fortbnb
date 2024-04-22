@@ -83,7 +83,7 @@ export const deleteReview = reviewId => async dispatch => {
 
 export const selectReviews = state => state.reviews;
 
-export const selectReviewsArr = createSelector(selectReviews, reviews => {
+export const selectAllReviews = createSelector(selectReviews, reviews => {
     return Object.values(reviews);
 });
 

@@ -1,6 +1,6 @@
 /* TODO: Add sitewide styles */
 * {
-    font-family:
+    font-family: 'Gilroy';
 }
 
 body {
@@ -10,6 +10,6 @@ body {
 }
 
 @font-face {
-    font-family: ;
-    src:
+    font-family: 'Gilroy';
+    src: url('/fonts/Gilroy-Regular.ttf') format('truetype');
 }
