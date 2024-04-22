@@ -1,4 +1,4 @@
-.navigation-bar {
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,7 +6,7 @@
 }
 
 .logo {
-  flex-grow: 1;
+  font-size: 50px;
 }
 
 .session-links {
