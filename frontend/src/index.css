@@ -1,4 +1,6 @@
 /* TODO: Add sitewide styles */
 body {
     margin: 0;
+    background: rgb(140,234,255);
+    background: linear-gradient(117deg, rgba(140,234,255,1) 0%, rgba(255,169,169,1) 100%);
 }
