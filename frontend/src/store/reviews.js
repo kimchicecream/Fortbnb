@@ -88,3 +88,23 @@ export const selectReviewsArr = createSelector(selectReviews, reviews => {
 });
 
 const initialState = {};
+
+function reviewsReducer(state = initialState, action) {
+    switch(action.type) {
+        case ADD_REVIEWS: {
+            const newState = { ...state };
+            action.reviews.forEach(review => newState[review.id] = review);
+            return newReview;
+        }
+        case REMOVE_REVIEW: {
+            if (state[action.reviewId] === undefined) return state;
+            const newState = { ...state };
+            delete newState[action.reviewId];
+            return newState;
+        }
+        default:
+            return state;
+    }
+}
+
+export default reviewsReducer;
