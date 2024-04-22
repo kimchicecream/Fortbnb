@@ -1,6 +1,15 @@
 /* TODO: Add sitewide styles */
+* {
+    font-family:
+}
+
 body {
     margin: 0;
     background: rgb(199,245,255);
     background: linear-gradient(90deg, rgba(199,245,255,1) 0%, rgba(255,212,212,1) 100%);
+}
+
+@font-face {
+    font-family: ;
+    src:
 }
