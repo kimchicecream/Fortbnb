@@ -1,1 +1,6 @@
 /* TODO: Add sitewide styles */
+* {
+    padding: 0;
+    margin: 0;
+    top: 0;
+}
