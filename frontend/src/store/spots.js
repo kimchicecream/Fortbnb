@@ -27,9 +27,10 @@ const addReviewToSpot = (spotId, reviews) => ({
 });
 
 export const getAllSpots = () => async dispatch => {
-    const response = await csrfFetch('/api/spots');
+    const response = await csrfFetch('/');
     if (response.ok) {
-        const spots = await response.json();
+        const data = await response.json();
+        const spots = data.Spots;
         dispatch(loadSpots(spots));
     } else {
         return await response.json();
@@ -117,7 +118,7 @@ export const deleteSpot = (spotId) => async dispatch => {
 export const selectSpots = state => state.spots;
 
 export const selectAllSpots = createSelector(selectSpots, (spots) => {
-    console.log('Current state of spots:', spots);
+    // console.log('Current state of spots:', spots);
     return spots ? Object.values(spots) : [];
 });
 
