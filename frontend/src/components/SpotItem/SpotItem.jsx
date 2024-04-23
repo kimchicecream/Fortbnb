@@ -1,5 +1,5 @@
 // import { useNavigate } from 'react-router-dom';
-import './SpotItem';
+import './SpotItem.css';
 
 function SpotItem({ spot }) {
     // const navigate = useNavigate();
