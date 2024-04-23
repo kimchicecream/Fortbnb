@@ -5,11 +5,12 @@ const headers = {
     'Content-Type': 'application/json'
 }
 
+// action types
 const LOAD_SPOTS = 'spots/loadSpots';
 const REMOVE_SPOT = 'spots/removeSpot';
 const ADD_REVIEW_TO_SPOT = 'spots/addReviewToSpot';
 
-
+// action creators
 const loadSpots = spots => ({
     type: LOAD_SPOTS,
     spots
@@ -26,8 +27,9 @@ const addReviewToSpot = (spotId, reviews) => ({
     reviews
 });
 
+// thunk actions
 export const getAllSpots = () => async dispatch => {
-    const response = await csrfFetch('/');
+    const response = await fetch('/api/spots');
     if (response.ok) {
         const data = await response.json();
         const spots = data.Spots;
@@ -61,7 +63,7 @@ export const getReviewsForSpotsById = spotId => async dispatch => {
 
 export const addSpot = spot => async dispatch => {
     try {
-        const response = await csrfFetch(`/api/spots`, {
+        const response = await csrfFetch('/api/spots', {
             method: 'POST',
             headers,
             body: JSON.stringify(spot)
@@ -115,20 +117,14 @@ export const deleteSpot = (spotId) => async dispatch => {
     }
 }
 
-export const selectSpots = state => state.spots;
-
-export const selectAllSpots = createSelector(selectSpots, (spots) => {
-    // console.log('Current state of spots:', spots);
-    return spots ? Object.values(spots) : [];
-});
-
+// reducers
 const initialState = {};
 
 function spotsReducer(state = initialState, action) {
     switch(action.type) {
         case LOAD_SPOTS: {
             const newState = { ...state };
-            action.spots.forEach(spot => newState[spot.id] = spot);
+            action.spots.forEach(spot => newState[spot.id] = spot)
             return newState;
         }
         case REMOVE_SPOT: {
@@ -146,5 +142,9 @@ function spotsReducer(state = initialState, action) {
             return state;
     }
 }
+
+// selectors
+export const selectSpots = state => state.spots;
+export const selectAllSpots = createSelector([selectSpots], spots => Object.values(spots || {}));
 
 export default spotsReducer;

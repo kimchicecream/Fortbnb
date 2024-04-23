@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots, selectAllSpots } from '../../store/spots.js';
-import SpotItem from '../SpotItem';
+import SpotItem from '../SpotItem/SpotItem.jsx';
 
 import './Home.css';
 
