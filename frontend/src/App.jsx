@@ -7,6 +7,7 @@ import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import SpotDetail from './components/SpotDetail';
+import CreateSpot from './components/CreateSpot';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/spots/:spotId',
         element: <SpotDetail />
+      },
+      {
+        path: '/spots/new',
+        element: <CreateSpot />
       }
       // {
       //   path: 'login',

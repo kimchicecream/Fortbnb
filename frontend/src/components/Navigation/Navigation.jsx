@@ -14,7 +14,7 @@ function Navigation({ isLoaded }) {
       <Link className='logo' to='/'>Fortbnb</Link>
       { isLoaded && (sessionUser ? (
         <div className='logged-in'>
-          <Link to='/spots'>Create a New Spot</Link>
+          <Link to='/spots/new'>Create a New Spot</Link>
           <ProfileButton user={sessionUser} />
         </div>
       ) : (
