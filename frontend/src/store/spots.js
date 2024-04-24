@@ -70,7 +70,7 @@ export const addSpot = spot => async dispatch => {
         });
         const newSpot = await response.json();
         dispatch(loadSpots([newSpot]));
-        return newSpot
+        return newSpot;
     } catch (e) {
         return e;
     }

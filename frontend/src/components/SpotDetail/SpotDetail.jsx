@@ -99,7 +99,7 @@ function SpotDetail() {
                     <p className='price'>{spot.price} vbucks per night</p>
                     <div className='rating-and-star'>
                         {displayStar()}
-                        <p className='rating'>{displayRating()}</p>
+                        <div className='rating'>{displayRating()}</div>
                     </div>
                     <button onClick={onClick}>Reserve</button>
                 </div>
@@ -108,7 +108,7 @@ function SpotDetail() {
             <div className='reviews-container'>
                 <div className='rating-reviews'>
                     {displayStar()}
-                    <p className='rating-review'>{displayRating()}</p>
+                    <div className='rating-review'>{displayRating()}</div>
                 </div>
                 {sessionUser && (
                     <button className='post-button'>Post Your Review</button>
@@ -116,14 +116,11 @@ function SpotDetail() {
                 <div className='user-reviews'>
                 {reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                     .map(review => (
-                        <>
                             <div key={review.id} className='review'>
-                                <p>{new Date(review.createdAt).toLocaleDateString()}</p>
                                 <h4>{review.User.firstName}</h4>
+                                <p>{new Date(review.createdAt).toLocaleDateString()}</p>
                                 <p>{review.review}</p>
                             </div>
-
-                        </>
                     ))
                 }
                 </div>
