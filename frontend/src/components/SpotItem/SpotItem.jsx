@@ -10,7 +10,7 @@ function SpotItem({ spot }) {
 
     const displayRating = () => {
         if (spot.avgRating !== null) {
-            return <p className='avg-rating'>{spot.avgRating}</p>
+            return <p className='avg-rating'>{spot.avgRating.toFixed(1)}</p>
         } else {
             return <p className='avg-rating new'>NEW</p>
         }
@@ -41,7 +41,7 @@ function SpotItem({ spot }) {
             </div>
             <div className='info-container' onClick={() => onClick(spot.id)}>
                 <p className='city-state'>{spot.city}, {spot.state}</p>
-                <p className='price'>{spot.price} per night</p>
+                <p className='price'>{spot.price} vbucks per night</p>
             </div>
         </div>
     )
