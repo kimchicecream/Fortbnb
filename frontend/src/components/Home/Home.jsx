@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots, selectAllSpots } from '../../store/spots.js';
 import SpotItem from '../SpotItem/SpotItem.jsx';
@@ -9,10 +9,15 @@ function Home() {
     // const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const spots = useSelector(selectAllSpots);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        dispatch(getAllSpots());
+        dispatch(getAllSpots()).then(() => {
+            setIsLoaded(true);
+        });
     }, [dispatch])
+
+    if (!isLoaded) return null;
 
     return (
         <div className='home-container'>

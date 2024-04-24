@@ -32,7 +32,7 @@ function SpotDetail() {
     }
 
     const displayRating = () => {
-        if (spot.avgStarRating !== null) {
+        if (spot.avgStarRating !== 0) {
             return <p className='rating'>{spot.avgStarRating.toFixed(1)}</p>
         } else {
             return <p className='rating new'>NEW</p>
@@ -57,7 +57,7 @@ function SpotDetail() {
         if (spot.numReviews < 1) {
             return '';
         } else if (spot.numReviews === 1) {
-            return '1 review';
+            return '* 1 review';
         } else {
             return `${spot.numReviews} reviews`;
         }
@@ -97,7 +97,7 @@ function SpotDetail() {
                     <p className='price'>{spot.price} per night</p>
                     <div className='rating-and-star'>
                         {/* {displayStar()} */}
-                        <p className='rating'>{displayRating()} * {checkNumReviews()}</p>
+                        <p className='rating'>{displayRating()} {checkNumReviews()}</p>
                     </div>
                     <button onClick={onClick}>Reserve</button>
                 </div>
@@ -106,7 +106,7 @@ function SpotDetail() {
             <div className='reviews-container'>
                 <div className='rating-reviews'>
                     {/* {displayStar()} */}
-                    <p className='rating-review'>{displayRating()} * {checkNumReviews()}</p>
+                    <p className='rating-review'>{displayRating()} {checkNumReviews()}</p>
                 </div>
                 {sessionUser && (
                     <button className='post-button'>Post Your Review</button>
