@@ -1,0 +1,36 @@
+.spot-details {
+    margin: 20px 120px 0 120px;
+}
+
+.images-container {
+    position: relative;
+    height: 450px;
+    width: 100%;
+
+    margin-top: 20px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    border: 2px solid red;
+}
+
+.main-image-container {
+    width: 750px;
+
+    border: 2px solid blue;
+}
+
+.side-images-container {
+    width: 490px;
+
+    border: 2px solid blue;
+}
+
+
+.description-container {
+    margin-top: 20px;
+
+    border: 2px solid red;
+}

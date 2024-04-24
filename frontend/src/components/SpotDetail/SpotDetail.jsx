@@ -3,9 +3,10 @@ import './SpotDetail.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+
 import { getSpotById, getReviewsForSpotsById, selectSpots } from '../../store/spots';
 
-function SpotDetail() {
+function SpotDetail({ isLoaded }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { spotId } = useParams();
@@ -20,11 +21,80 @@ function SpotDetail() {
 
     if (!spot) return null;
 
+    const displayRating = () => {
+        if (spot.avgStarRating !== null) {
+            return <p className='rating'>{spot.avgStarRating}</p>
+        } else {
+            return <p className='rating new'>NEW</p>
+        }
+    }
+
+    const displayStar = () => {
+        if (spot.avgStarRating > 4.6) {
+            return <img className='star-details' src='../../../public/stars/4.6above.png' />
+        } else if (spot.avgStarRating < 4.5 && spot.avgStarRating > 3.6) {
+            return <img className='star-details' src='../../../public/stars/4.5below.png' />
+        } else if (spot.avgStarRating < 3.5 && spot.avgStarRating > 2.6) {
+            return <img className='star-details' src='../../../public/stars/3.5below.png' />
+        } else if (spot.avgStarRating < 2.5 && spot.avgStarRating > 1.6) {
+            return <img className='star-details' src='../../../public/stars/2.5below.png' />
+        } else if (spot.avgStarRating > 0) {
+            return <img className='star-details' src='../../../public/stars/1.5below.png' />
+        }
+    }
+
+    const checkNumReviews = () => {
+        if (spot.numReviews < 1) {
+            return '';
+        } else if (spot.numReviews === 1) {
+            return '1 review';
+        } else {
+            return `${spot.numReviews} reviews`;
+        }
+    }
+
     return (
         <div className='spot-details'>
             <div className='title-container'>
                 <div className='spot-name'>{spot.name}</div>
                 <div className='spot-location'>{spot.city}, {spot.state}, {spot.country}</div>
+            </div>
+
+            <div className='images-container'>
+                <div className='main-image-container'>
+                    <img className='main-image' src={spot.previewImage} alt={`Preview of ${spot.name}`} />
+                </div>
+                <div className='side-images-container'>
+                    <div className='top-left-container'>
+                        <img className='top-left-image' src={spot.SpotImages[1]} alt='Top left image' />
+                    </div>
+                    <div className='top-right-container'>
+                        <img className='top-right-image' src={spot.SpotImages[2]} alt='Top right image' />
+                    </div>
+                    <div className='bottom-left-container'>
+                        <img className='bottom-left-image' src={spot.SpotImages[3]} alt='Bottom left image' />
+                    </div>
+                    <div className='bottom-right-container'>
+                        <img className='bottom-right-image' src={spot.SpotImages[4]} alt='Bottom right image' />
+                    </div>
+                </div>
+            </div>
+
+            <div className='description-container'>
+                <div className='host-name'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
+                <div className='description'>{spot.description}</div>
+                <div className='button-container'>
+                    <p className='price'>{spot.price} per night</p>
+                    <div className='rating-and-star'>
+                        {displayStar()}
+                        <p className='rating'>{displayRating()} * {checkNumReviews()}</p>
+                    </div>
+                    <button>Reserve</button>
+                </div>
+            </div>
+
+            <div className='reviews-container'>
+
             </div>
         </div>
     )
