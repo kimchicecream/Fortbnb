@@ -1,3 +1,11 @@
 .title-container {
     background-color: #FF5A5F;
 }
+
+.spots-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    margin: 0 60px;
+}
