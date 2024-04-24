@@ -2,11 +2,11 @@ import './SpotDetail.css';
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getSpotById, getReviewsForSpotsById, selectSpots } from '../../store/spots';
 
-function SpotDetail({ isLoaded }) {
+function SpotDetail() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { spotId } = useParams();
@@ -14,12 +14,22 @@ function SpotDetail({ isLoaded }) {
     const spot = useSelector(selectSpots)[spotId];
     const sessionUser = useSelector(state => state.session.user);
 
+    const [isLoaded, setIsLoaded] = useState(false);
+
     useEffect(() => {
+        setIsLoaded(false);
         dispatch(getSpotById(spotId))
-            .then(() => dispatch(getReviewsForSpotsById(spotId)));
+            .then(() => {
+                dispatch(getReviewsForSpotsById(spotId))
+                    .then(() => setIsLoaded(true));
+            });
     }, [dispatch, spotId]);
 
-    if (!spot) return null;
+    if (!spot || !isLoaded) return null;
+
+    const onClick = () => {
+        alert('Feature coming soon');
+    }
 
     const displayRating = () => {
         if (spot.avgStarRating !== null) {
@@ -86,15 +96,21 @@ function SpotDetail({ isLoaded }) {
                 <div className='button-container'>
                     <p className='price'>{spot.price} per night</p>
                     <div className='rating-and-star'>
-                        {displayStar()}
+                        {/* {displayStar()} */}
                         <p className='rating'>{displayRating()} * {checkNumReviews()}</p>
                     </div>
-                    <button>Reserve</button>
+                    <button onClick={onClick}>Reserve</button>
                 </div>
             </div>
 
             <div className='reviews-container'>
-
+                <div className='rating-reviews'>
+                    {/* {displayStar()} */}
+                    <p className='rating-review'>{displayRating()} * {checkNumReviews()}</p>
+                </div>
+                {sessionUser && (
+                    <button className='post-button'>Post Your Review</button>
+                )}
             </div>
         </div>
     )
