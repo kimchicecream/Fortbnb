@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import { getSpotById, getReviewsForSpotsById, selectSpots } from '../../store/spots';
+import { getAllReviews, selectAllReviews, getReviewById } from '../../store/reviews';
 
 function SpotDetail() {
     const navigate = useNavigate();
@@ -12,6 +13,7 @@ function SpotDetail() {
     const { spotId } = useParams();
 
     const spot = useSelector(selectSpots)[spotId];
+    const reviews = useSelector(selectAllReviews)
     const sessionUser = useSelector(state => state.session.user);
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -33,7 +35,7 @@ function SpotDetail() {
 
     const displayRating = () => {
         if (spot.avgStarRating !== 0) {
-            return <p className='rating'>{spot.avgStarRating.toFixed(1)}</p>
+            return <p className='rating'>{spot.avgStarRating.toFixed(1)} {checkNumReviews()}</p>
         } else {
             return <p className='rating new'>NEW</p>
         }
@@ -72,7 +74,7 @@ function SpotDetail() {
 
             <div className='images-container'>
                 <div className='main-image-container'>
-                    <img className='main-image' src={spot.previewImage} alt={`Preview of ${spot.name}`} />
+                    <img className='main-image' src={spot.SpotImages[0]?.url} alt={`Preview of ${spot.name}`} />
                 </div>
                 <div className='side-images-container'>
                     <div className='top-left-container'>
@@ -94,10 +96,10 @@ function SpotDetail() {
                 <div className='host-name'>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</div>
                 <div className='description'>{spot.description}</div>
                 <div className='button-container'>
-                    <p className='price'>{spot.price} per night</p>
+                    <p className='price'>{spot.price} vbucks per night</p>
                     <div className='rating-and-star'>
-                        {/* {displayStar()} */}
-                        <p className='rating'>{displayRating()} {checkNumReviews()}</p>
+                        {displayStar()}
+                        <p className='rating'>{displayRating()}</p>
                     </div>
                     <button onClick={onClick}>Reserve</button>
                 </div>
@@ -105,12 +107,26 @@ function SpotDetail() {
 
             <div className='reviews-container'>
                 <div className='rating-reviews'>
-                    {/* {displayStar()} */}
-                    <p className='rating-review'>{displayRating()} {checkNumReviews()}</p>
+                    {displayStar()}
+                    <p className='rating-review'>{displayRating()}</p>
                 </div>
                 {sessionUser && (
                     <button className='post-button'>Post Your Review</button>
                 )}
+                <div className='user-reviews'>
+                {reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .map(review => (
+                        <>
+                            <div key={review.id} className='review'>
+                                <p>{new Date(review.createdAt).toLocaleDateString()}</p>
+                                <h4>{review.User.firstName}</h4>
+                                <p>{review.review}</p>
+                            </div>
+
+                        </>
+                    ))
+                }
+                </div>
             </div>
         </div>
     )

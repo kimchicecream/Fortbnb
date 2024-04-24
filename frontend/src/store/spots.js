@@ -135,7 +135,8 @@ function spotsReducer(state = initialState, action) {
         case ADD_REVIEW_TO_SPOT: {
             if (!state[action.spotId]) return state;
             const newStateWithReview = { ...state };
-            newStateWithReview[action.spotId].Reviews = action.reviews;
+            const existingReviews = newStateWithReview[action.spotId].Reviews || [];
+            newStateWithReview[action.spotId].Reviews = [...existingReviews, ...action.reviews.filter(r => !existingReviews.find(er => er.id === r.id))];
             return newStateWithReview;
         }
         default:

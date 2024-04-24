@@ -5,6 +5,7 @@ const headers = {
     'Content-Type': 'application/json'
 }
 
+// action types
 const ADD_REVIEWS = 'reviews/addReviews';
 const REMOVE_REVIEW = 'reviews/removeReview';
 
@@ -13,11 +14,13 @@ const addReviews = reviews => ({
     reviews
 });
 
+// action creators
 const removeReview = reviewId => ({
     type: REMOVE_REVIEW,
     reviewId
 });
 
+// thunk actions
 export const getAllReviews = () => async dispatch => {
     try {
         const response = await csrfFetch('/api/reviews');
@@ -81,12 +84,7 @@ export const deleteReview = reviewId => async dispatch => {
     }
 }
 
-export const selectReviews = state => state.reviews;
-
-export const selectAllReviews = createSelector(selectReviews, reviews => {
-    return Object.values(reviews);
-});
-
+// reducers
 const initialState = {};
 
 function reviewsReducer(state = initialState, action) {
@@ -106,5 +104,9 @@ function reviewsReducer(state = initialState, action) {
             return state;
     }
 }
+
+// selectors
+export const selectReviews = state => state.reviews;
+export const selectAllReviews = createSelector([selectReviews], reviews => Object.values(reviews || {}));
 
 export default reviewsReducer;
