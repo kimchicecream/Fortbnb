@@ -15,10 +15,7 @@ function SpotItem({ spot }) {
             </div>
             <div className='info-container' onClick={() => onClick(spot.id)}>
                 <h3 className='city-state'>{spot.city}, {spot.state}</h3>
-                <div className='price-container'>
-                    <p className='price'>{spot.price}</p>
-                    <p className='night-word'>night</p>
-                </div>
+                <p className='price'>{spot.price} per night</p>
                 <div className='stars-container'>
                     <p className='avg-stars'>{spot.avgRating}</p>
                 </div>
