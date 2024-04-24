@@ -13,17 +13,17 @@ module.exports = {
     await SpotImage.bulkCreate([
       {
         spotId: 1,
-        url: 'www.url1.com',
+        url: 'https://i.postimg.cc/Z5CbFC29/Bunker-Hut-1.webp',
         preview: true
       },
       {
         spotId: 2,
-        url: 'www.url2.com',
+        url: 'https://i.postimg.cc/Z5CbFC29/Bunker-Hut-1.webp',
         preview: true
       },
       {
         spotId: 3,
-        url: 'www.url3.com',
+        url: 'https://i.postimg.cc/Z5CbFC29/Bunker-Hut-1.webp',
         preview: true
       }
     ])
@@ -32,7 +32,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'SpotImages';
     return queryInterface.bulkDelete(options, {
-      url: { [Sequelize.Op.in]: ['www.url1.com', 'www.url2.com', 'www.url3.com'] }
+      url: { [Sequelize.Op.ne]: null }
     }, {});
   }
 };

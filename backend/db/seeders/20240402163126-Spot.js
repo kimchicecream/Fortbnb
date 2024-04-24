@@ -47,6 +47,30 @@ module.exports = {
         name: 'Trump Tower',
         description: 'Soda',
         price: 80000
+      },
+      {
+        ownerId: 1,
+        address: '5403 N Estate Street',
+        city: 'Lavish Lair',
+        state: 'The Island',
+        country: 'United States Of America',
+        lat: 63.2324222,
+        lng: -120.3333333,
+        name: 'Lavish Mansion Estate',
+        description: '1,000,000 vbuck property on The Island. Located at Lavish Lair, north of Restored Reels.',
+        price: 1000000
+      },
+      {
+        ownerId: 1,
+        address: '752 E Grand Station Street',
+        city: 'Reckless Railways',
+        state: 'The Island',
+        country: 'United States Of America',
+        lat: 62.2324222,
+        lng: -119.3333333,
+        name: 'Second Floor Apartment',
+        description: 'Located right next to the Grand Station, this apartment offers homey vibes for your comfort.',
+        price: 2000
       }
     ], { validate: true });
   },
@@ -54,7 +78,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     options.tableName = 'Spots';
     return queryInterface.bulkDelete(options, {
-      name: { [Sequelize.Op.in]: ['App Academy', 'Apartment', 'Trump Tower'] }
+      name: { [Sequelize.Op.in]: ['App Academy', 'Apartment', 'Trump Tower', 'Lavish Mansion Estate', 'Second Floor Apartment'] }
     }, {});
   }
 };
