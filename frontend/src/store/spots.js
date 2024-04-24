@@ -70,7 +70,7 @@ export const addSpot = spot => async dispatch => {
         });
         const newSpot = await response.json();
         dispatch(loadSpots([newSpot]));
-        return newSpot;
+        return newSpot
     } catch (e) {
         return e;
     }
@@ -135,8 +135,10 @@ function spotsReducer(state = initialState, action) {
         case ADD_REVIEW_TO_SPOT: {
             if (!state[action.spotId]) return state;
             const newStateWithReview = { ...state };
-            const existingReviews = newStateWithReview[action.spotId].Reviews || [];
-            newStateWithReview[action.spotId].Reviews = [...existingReviews, ...action.reviews.filter(r => !existingReviews.find(er => er.id === r.id))];
+            newStateWithReview[action.spotId] = {
+                ...state[action.spotId],
+                Reviews: action.reviews
+            }
             return newStateWithReview;
         }
         default:

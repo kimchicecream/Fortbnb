@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import { getSpotById, getReviewsForSpotsById, selectSpots } from '../../store/spots';
-import { getAllReviews, selectAllReviews, getReviewById } from '../../store/reviews';
+// import { getAllReviews, selectAllReviews, getReviewById } from '../../store/reviews';
 
 function SpotDetail() {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ function SpotDetail() {
     const { spotId } = useParams();
 
     const spot = useSelector(selectSpots)[spotId];
-    const reviews = useSelector(selectAllReviews)
+    const reviews = spot ? spot.Reviews : [];
     const sessionUser = useSelector(state => state.session.user);
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -61,9 +61,11 @@ function SpotDetail() {
         } else if (spot.numReviews === 1) {
             return '* 1 review';
         } else {
-            return `${spot.numReviews} reviews`;
+            return `* ${spot.numReviews} reviews`;
         }
     }
+
+    const userIsNotOwner = sessionUser && sessionUser.id !== spot.Owner.id;
 
     return (
         <div className='spot-details'>
@@ -106,24 +108,41 @@ function SpotDetail() {
             </div>
 
             <div className='reviews-container'>
-                <div className='rating-reviews'>
-                    {displayStar()}
-                    <div className='rating-review'>{displayRating()}</div>
-                </div>
-                {sessionUser && (
-                    <button className='post-button'>Post Your Review</button>
+                {reviews.length > 0 ? (
+                    <>
+                        <div className='rating-reviews'>
+                            {displayStar()}
+                            <div className='rating-review'>{displayRating()}</div>
+                        </div>
+                        {sessionUser && userIsNotOwner && (
+                            <button className='post-button'>Post Your Review</button>
+                        )}
+                        <div className='user-reviews'>
+                        {reviews && reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                            .map(review => (
+                                <div key={review.id} className='review'>
+                                    <div className='review-owner'>{review.User.firstName}</div>
+                                    <div className='review-createdAt'>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
+                                    <div className='review-text'>{review.review}</div>
+                                </div>
+                            ))
+                        }
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className='rating-reviews'>
+                            {displayStar()}
+                        <div className='rating-review'>{displayRating()}</div>
+                        </div>
+                        {userIsNotOwner && (
+                            <div className='no-reviews'>Be the first to post a review!</div>
+                        )}
+                        {sessionUser && userIsNotOwner && (
+                            <button className='post-button'>Post Your Review</button>
+                        )}
+                    </>
                 )}
-                <div className='user-reviews'>
-                {reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                    .map(review => (
-                            <div key={review.id} className='review'>
-                                <h4>{review.User.firstName}</h4>
-                                <p>{new Date(review.createdAt).toLocaleDateString()}</p>
-                                <p>{review.review}</p>
-                            </div>
-                    ))
-                }
-                </div>
             </div>
         </div>
     )

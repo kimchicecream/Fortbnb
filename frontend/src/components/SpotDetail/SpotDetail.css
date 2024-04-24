@@ -63,3 +63,11 @@
     max-width: 24px;
     max-height: 24px;
 }
+
+.user-reviews {
+    margin-top: 20px;
+}
+
+.no-reviews {
+    margin-top: 20px;
+}
