@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: rebeccapurple;
+  background-color: rgb(238, 221, 255);
   height: 60px;
   top: 0;
 }
@@ -27,4 +27,7 @@
 
 .hidden {
   display: none;
+}
+
+.profile-dropdown {
 }

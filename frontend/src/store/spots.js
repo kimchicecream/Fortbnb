@@ -137,12 +137,25 @@ function spotsReducer(state = initialState, action) {
         }
         case ADD_REVIEW_TO_SPOT: {
             if (!state[action.spotId]) return state;
-            const newStateWithReview = { ...state };
-            newStateWithReview[action.spotId] = {
-                ...state[action.spotId],
-                Reviews: action.reviews
-            }
-            return newStateWithReview;
+    const spot = state[action.spotId];
+    const existingReviews = spot.Reviews || [];
+
+    // Create a map of existing review IDs for quick lookup
+    const existingReviewIds = new Set(existingReviews.map(review => review.id));
+
+    // Filter the new reviews to only include those not already present
+    const newReviews = action.reviews.filter(review => !existingReviewIds.has(review.id));
+
+    // Merge the existing reviews with the new, non-duplicate reviews
+    const updatedReviews = [...existingReviews, ...newReviews];
+
+    return {
+        ...state,
+        [action.spotId]: {
+            ...spot,
+            Reviews: updatedReviews
+        }
+    };
         }
         default:
             return state;

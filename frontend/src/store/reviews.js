@@ -45,6 +45,7 @@ export const getReviewById = reviewId => async dispatch => {
 
 export const addReview = (spotId, review) => async dispatch => {
     try {
+        console.log(review);
         const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
             method: 'POST',
             headers,

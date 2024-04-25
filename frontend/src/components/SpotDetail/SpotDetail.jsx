@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import { getSpotById, getReviewsForSpotsById, selectSpots } from '../../store/spots';
+import OpenModalButton from '../OpenModalButton';
+import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
 // import { getAllReviews, selectAllReviews, getReviewById } from '../../store/reviews';
 
 function SpotDetail() {
@@ -16,10 +18,16 @@ function SpotDetail() {
     const reviews = spot ? spot.Reviews : [];
     const sessionUser = useSelector(state => state.session.user);
 
+    const [review, setReviews] = useState(spot ? spot.Reviews : []);
+
+    const addReviewToState = (newReview) => {
+        setReviews(prevReviews => [...prevReviews, newReview]);
+    }
+
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        // setIsLoaded(false);
+        setIsLoaded(false);
         dispatch(getSpotById(spotId))
             .then(() => {
                 dispatch(getReviewsForSpotsById(spotId))
@@ -42,16 +50,16 @@ function SpotDetail() {
     }
 
     const displayStar = () => {
-        if (spot.avgStarRating > 4.6) {
-            return <img className='star-details' src='../../../public/stars/4.6above.png' />
-        } else if (spot.avgStarRating < 4.5 && spot.avgStarRating > 3.6) {
-            return <img className='star-details' src='../../../public/stars/4.5below.png' />
-        } else if (spot.avgStarRating < 3.5 && spot.avgStarRating > 2.6) {
-            return <img className='star-details' src='../../../public/stars/3.5below.png' />
-        } else if (spot.avgStarRating < 2.5 && spot.avgStarRating > 1.6) {
-            return <img className='star-details' src='../../../public/stars/2.5below.png' />
+        if (spot.avgStarRating === 5) {
+            return <img className='star-details' src='../../../stars/4.6above.png' />
+        } else if (spot.avgStarRating < 5 && spot.avgStarRating >= 4) {
+            return <img className='star-details' src='../../../stars/4.5below.png' />
+        } else if (spot.avgStarRating < 4 && spot.avgStarRating >= 3) {
+            return <img className='star-details' src='../../../stars/3.5below.png' />
+        } else if (spot.avgStarRating < 3 && spot.avgStarRating >= 2) {
+            return <img className='star-details' src='../../../stars/2.5below.png' />
         } else if (spot.avgStarRating > 0) {
-            return <img className='star-details' src='../../../public/stars/1.5below.png' />
+            return <img className='star-details' src='../../../stars/1.5below.png' />
         }
     }
 
@@ -68,6 +76,8 @@ function SpotDetail() {
     const userIsNotOwner = sessionUser && sessionUser.id !== spot.Owner.id;
 
     const hasReviews = reviews && Array.isArray(reviews) && reviews.length > 0;
+
+    const userHasReviewed = reviews.some(review => review.userId === sessionUser?.id);
 
     return (
         <div className='spot-details'>
@@ -110,14 +120,17 @@ function SpotDetail() {
             </div>
 
             <div className='reviews-container'>
-                {hasReviews ? (
+                {isLoaded && hasReviews ? (
                     <>
                         <div className='rating-reviews'>
                             {displayStar()}
                             <div className='rating-review'>{displayRating()}</div>
                         </div>
-                        {sessionUser && userIsNotOwner && (
-                            <button className='post-button'>Post Your Review</button>
+                        {isLoaded && !userHasReviewed && sessionUser && userIsNotOwner && (
+                            <OpenModalButton
+                                buttonText='Post Your Review'
+                                modalComponent={<ReviewFormModal addReviewToState={addReviewToState} user={sessionUser} spotId={spot.id}/>}
+                            />
                         )}
                         <div className='user-reviews'>
                         {reviews && reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -126,6 +139,7 @@ function SpotDetail() {
                                     <div className='review-owner'>{review.User.firstName}</div>
                                     <div className='review-createdAt'>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
                                     <div className='review-text'>{review.review}</div>
+                                    <div className='star-rating'>{review.stars} stars</div>
                                 </div>
                             ))
                         }
@@ -140,8 +154,11 @@ function SpotDetail() {
                         {userIsNotOwner && (
                             <div className='no-reviews'>Be the first to post a review!</div>
                         )}
-                        {sessionUser && userIsNotOwner && (
-                            <button className='post-button'>Post Your Review</button>
+                        {isLoaded && !userHasReviewed && sessionUser && userIsNotOwner && (
+                            <OpenModalButton
+                                buttonText='Post Your Review'
+                                modalComponent={<ReviewFormModal addReviewToState={addReviewToState} user={sessionUser} spotId={spot.id}/>}
+                            />
                         )}
                     </>
                 )}
