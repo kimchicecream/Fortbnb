@@ -38,14 +38,26 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
+      <div className='icon-container'>
+        <button onClick={toggleMenu}>
+            <i className="fas fa-user-circle" />
+        </button>
+      </div>
       <div className={ulClassName} ref={ulRef}>
-        <p>Hello, {user.firstName}</p>
-        <p>{user.email}</p>
-        <div className='logout-button'>
-          <button onClick={logout}>Log Out</button>
+        <div className='divider'>
+          <h4>Hello, {user.firstName}</h4>
+          <p>{user.email}</p>
+        </div>
+        <div className='divider'>
+          <Link to='/spots' onClick={() => setShowMenu(false)}>Manage Spots</Link>
+        </div>
+        <div className='divider'>
+          <Link to='/reviews' onClick={() => setShowMenu(false)}>Manage Reviews</Link>
+        </div>
+        <div className='divider'>
+          <div className='logout-button'>
+            <button onClick={logout}>Log Out</button>
+          </div>
         </div>
       </div>
     </>
