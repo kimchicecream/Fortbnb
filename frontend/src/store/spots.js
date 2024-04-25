@@ -61,16 +61,19 @@ export const getReviewsForSpotsById = spotId => async dispatch => {
     }
 }
 
-export const addSpot = spot => async dispatch => {
+export const addSpot = (spotData) => async dispatch => {
     try {
         const response = await csrfFetch('/api/spots', {
             method: 'POST',
             headers,
-            body: JSON.stringify(spot)
+            body: JSON.stringify(spotData)
         });
-        const newSpot = await response.json();
-        dispatch(loadSpots([newSpot]));
-        return newSpot
+
+        if (response.ok) {
+            const newSpot = await response.json();
+            dispatch({ type: 'ADD_SPOT', payload: newSpot });
+            return newSpot;
+        }
     } catch (e) {
         return e;
     }

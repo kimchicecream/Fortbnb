@@ -16,6 +16,8 @@ function SpotItem({ spot }) {
         }
     }
 
+    const imageUrl = spot.SpotImages && spot.SpotImages.length > 0 ? spot.SpotImages[0].url : spot.previewImage;
+
     const displayStar = () => {
         if (spot.avgRating > 4.6) {
             return <img className='star' src='../../../public/stars/4.6above.png' />
@@ -33,7 +35,7 @@ function SpotItem({ spot }) {
     return (
         <div className='spotitem-container' title={`${spot.name}`}>
             <div className='image-container' onClick={() => onClick(spot.id)}>
-                <img className='image' src={spot.previewImage} alt={`Preview of ${spot.name}`} />
+                <img className='image' src={imageUrl} alt={`Preview of ${spot.name}`} />
                 <div className='rating-overlay'>
                     {displayStar()}
                     <p className='rating'>{displayRating()}</p>

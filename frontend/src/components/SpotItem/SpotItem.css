@@ -2,6 +2,7 @@
     flex: 0 0 320px;
     margin: 5px;
     border: 2px solid red;
+    width: 25%;
 }
 
 .image-container {

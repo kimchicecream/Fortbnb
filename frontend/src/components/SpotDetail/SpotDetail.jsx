@@ -19,7 +19,7 @@ function SpotDetail() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        setIsLoaded(false);
+        // setIsLoaded(false);
         dispatch(getSpotById(spotId))
             .then(() => {
                 dispatch(getReviewsForSpotsById(spotId))
@@ -67,6 +67,8 @@ function SpotDetail() {
 
     const userIsNotOwner = sessionUser && sessionUser.id !== spot.Owner.id;
 
+    const hasReviews = reviews && Array.isArray(reviews) && reviews.length > 0;
+
     return (
         <div className='spot-details'>
             <div className='title-container'>
@@ -108,7 +110,7 @@ function SpotDetail() {
             </div>
 
             <div className='reviews-container'>
-                {reviews.length > 0 ? (
+                {hasReviews ? (
                     <>
                         <div className='rating-reviews'>
                             {displayStar()}

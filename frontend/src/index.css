@@ -8,9 +8,10 @@
 
 body {
     margin: 0;
+    color: white;
 
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(211,156,255,1) 100%);
+    background: rgb(0,0,0);
+background: linear-gradient(94deg, rgba(0,0,0,1) 0%, rgba(117,74,148,1) 50%, rgba(208,149,255,1) 100%);
 }
 
 /* @font-face {
