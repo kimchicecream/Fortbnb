@@ -3,14 +3,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: rgb(238, 221, 255);
-  height: 60px;
+  background-color: rgb(211, 187, 255);
+  height: 70px;
   top: 0;
+  margin: 0 60px;
 }
 
 .logo {
   font-size: 50px;
-  padding: 0 0 0 50px;
 }
 
 /* .session-links {
@@ -27,7 +27,4 @@
 
 .hidden {
   display: none;
-}
-
-.profile-dropdown {
 }

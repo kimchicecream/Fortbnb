@@ -38,7 +38,7 @@ function SpotItem({ spot }) {
                 <img className='image' src={imageUrl} alt={`Preview of ${spot.name}`} />
                 <div className='rating-overlay'>
                     {displayStar()}
-                    <p className='rating'>{displayRating()}</p>
+                    <div className='rating'>{displayRating()}</div>
                 </div>
             </div>
             <div className='info-container' onClick={() => onClick(spot.id)}>
