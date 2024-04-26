@@ -10,7 +10,9 @@ body {
     margin: 0;
     color: black;
 
-    background: rgb(253, 209, 255);
+    background: rgb(210, 186, 255);
+
+    padding-top: 70px;
 }
 
 /* @font-face {

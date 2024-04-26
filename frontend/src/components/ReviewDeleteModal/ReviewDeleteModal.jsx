@@ -10,9 +10,9 @@ function ReviewDeleteModal({ reviewId, spotId }) {
 
     const handleDelete = async () => {
         await dispatch(deleteReview(reviewId))
-            .then(() => {
-                dispatch(getReviewsForSpotsById(spotId))
-            })
+            // .then(async () => {
+            //     await dispatch(getReviewsForSpotsById(spotId))
+            // })
             .then(closeModal)
             // window.location.reload();
     }

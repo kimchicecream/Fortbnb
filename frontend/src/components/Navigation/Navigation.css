@@ -1,34 +1,48 @@
 .navigation-container {
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  background-color: rgb(211, 187, 255);
+  background-color: rgb(120, 48, 255);
   height: 70px;
+  width: 100%;
+  top: 0;
 }
 
 .logo-png {
   height: 40px;
-  margin: 60px;
+  margin: 0 80px;
+  border: 2px solid red;
 }
 
 .signup-login-container {
+  margin: 0 80px;
   border: 2px solid red;
 }
 
 .logged-in {
   border: 2px solid red;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin: 0 80px;
 }
 
-.logged-in > Link {
+.logged-in a {
   text-decoration: none;
 }
 
 .profile-dropdown {
   position: absolute;
-  right: 0;
+  bottom: 645px;
+  right: 80px;
+  border: 2px solid red;
 }
 
 .hidden {
   display: none;
+}
+
+.signup-button, .login-button {
+
 }
