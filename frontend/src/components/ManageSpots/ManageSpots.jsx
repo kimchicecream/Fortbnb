@@ -24,7 +24,7 @@ function ManageSpots() {
         <div className='manage-spots-container'>
             <h1>Manage Your Spots</h1>
             <Link to='/spots/new'>Create a New Spot</Link>
-            <div className='spots-owned'>
+            <div className='spots-owned-container'>
                 {ownedSpots.length > 0 ? (
                     ownedSpots.map(spot => <SpotItem key={spot.id} spot={spot} />)
                 ) : (

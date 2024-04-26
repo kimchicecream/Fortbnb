@@ -6,7 +6,6 @@ import SpotItem from '../SpotItem/SpotItem.jsx';
 import './Home.css';
 
 function Home() {
-    // const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const spots = useSelector(selectAllSpots);
     const [isLoaded, setIsLoaded] = useState(false);
