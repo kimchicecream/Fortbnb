@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { addReview } from '../../store/reviews';
-import { useParams } from 'react-router-dom';
-
 import {getReviewsForSpotsById} from '../../store/spots';
-
 import './ReviewFormModal.css';
 
 function ReviewFormModal({ spotId }) {

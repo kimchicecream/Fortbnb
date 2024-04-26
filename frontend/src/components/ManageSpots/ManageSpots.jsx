@@ -34,10 +34,9 @@ function ManageSpots() {
                             <Link to={`/spots/${spot.id}/edit`}>Edit</Link>
                             <OpenModalButton
                                 buttonText='Delete'
-                                modalComponent={<ConfirmDeleteModal key={spot.id} spot={spot}/>}
+                                modalComponent={<ConfirmDeleteModal spotId={spot.id} />}
                             />
                         </SpotItem>
-
                     )
                 ) : (
                     <div>You have no spots listed. <Link to='/spots/new'>Create a new spot.</Link></div>
