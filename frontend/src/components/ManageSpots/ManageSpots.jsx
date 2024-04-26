@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SpotItem from '../SpotItem';
 import { getAllSpots, selectAllSpots } from '../../store/spots.js';
+import OpenModalButton from '../OpenModalButton/OpenModalButton.jsx';
+import ConfirmDeleteModal from '../ConfirmDeleteModal/ConfirmDeleteModal.jsx';
 
 function ManageSpots() {
     const navigate = useNavigate();
@@ -29,8 +31,13 @@ function ManageSpots() {
                 {ownedSpots.length > 0 ? (
                     ownedSpots.map(spot =>
                         <SpotItem key={spot.id} spot={spot}>
-<                           Link to={`/spots/${spot.id}/edit`}>Edit</Link>
+                            <Link to={`/spots/${spot.id}/edit`}>Edit</Link>
+                            <OpenModalButton
+                                buttonText='Delete'
+                                modalComponent={<ConfirmDeleteModal key={spot.id} spot={spot}/>}
+                            />
                         </SpotItem>
+
                     )
                 ) : (
                     <div>You have no spots listed. <Link to='/spots/new'>Create a new spot.</Link></div>
