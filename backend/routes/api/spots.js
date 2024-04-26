@@ -207,8 +207,7 @@ const validateSpotCreation = [
         .exists({ checkFalsy: true })
         .withMessage('Country is required'),
     check('lat')
-        .exists({ checkFalsy: true })
-        .withMessage('Latitude is required')
+        .optional()
         .isNumeric()
         .withMessage('Latitude is not valid')
         .custom((value) => {
@@ -219,8 +218,7 @@ const validateSpotCreation = [
             return true;
         }),
     check('lng')
-        .exists({ checkFalsy: true })
-        .withMessage('Longitude is required')
+        .optional()
         .isNumeric()
         .withMessage('Longitude is not valid')
         .custom((value) => {
@@ -434,18 +432,18 @@ router.get('/:spotId/reviews', async (req, res) => {
     });
 });
 
-const validateReview = [
-    check('review')
-        .exists({ checkFalsy: true })
-        .withMessage('Review text is required'),
-    check('stars')
-        .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5'),
-    handleValidationErrors
-]
+// const validateReview = [
+//     check('review')
+//         .exists({ checkFalsy: true })
+//         .withMessage('Review text is required'),
+//     check('stars')
+//         .isInt({ min: 1, max: 5 })
+//         .withMessage('Stars must be an integer from 1 to 5'),
+//     handleValidationErrors
+// ]
 
 // Create a Review for a Spot based on the Spot's id
-router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) => {
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
     const userId = req.user.id;
     const spotId = req.params.spotId;
     const { review, stars } = req.body;
@@ -473,7 +471,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
         stars
     });
 
-    const formattedSpotId = parseInt(spotId);
+    const formattedSpotId = parseInt(spotId, 10);
 
     return res.status(201).json({
         id: newReview.id,
@@ -689,36 +687,5 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
         Bookings: formattedBookings
     });
 });
-
-// Add Query Filters to get all Spots
-// router.get('/', queryValidations, async (req, res) => {
-//     let { page, size} = req.query;
-
-//     page = parseInt(page) || 1;
-//     size = parseInt(size) || 20;
-
-//     // const where = {};
-//     // if (minLat && maxLat) where.lat = { [Op.between]: [minLat, maxLat] };
-//     // if (minLng && maxLng) where.lng = { [Op.between]: [minLng, maxLng] };
-//     // if (minPrice && maxPrice) where.price = { [Op.between]: [minPrice, maxPrice] };
-
-//     // const offset = (page - 1) * size;
-//     // const spots = await Spot.findAll({
-//     //     where,
-//     //     limit: size,
-//     //     offset
-//     // });
-
-//     const spots = await Spot.findAll({
-//         offset: (page - 1) * size,
-//         limit: size
-//     })
-
-//     res.status(200).json({
-//         Spots: spots,
-//         page: page,
-//         size: size
-//     });
-// });
 
 module.exports = router;
