@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2000;
 }
 
 #modal-background {
@@ -15,10 +16,17 @@
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.249);
+  backdrop-filter: blur(10px);
 }
 
 #modal-content {
-  position: absolute;
-  background-color:white;
+  position: fixed;
+  background-color: rgb(242, 224, 244);
+
+  border-radius: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.345);
+  backdrop-filter: blur(10px);
+
+  width: 450px;
 }

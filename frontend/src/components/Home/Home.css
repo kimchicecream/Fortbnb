@@ -1,5 +1,6 @@
-.home-container .title-container {
+.home-container .hero-container {
     background-color: #FF5A5F;
+    height: 500px;
 }
 
 .spots-container {
@@ -10,4 +11,9 @@
     flex-direction: row;
     margin-top: 20px;
     border: 2px solid red;
+}
+
+.home-container h1 {
+    display: flex;
+    justify-content: center;
 }

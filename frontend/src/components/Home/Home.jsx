@@ -20,9 +20,8 @@ function Home() {
 
     return (
         <div className='home-container'>
-            <div className='title-container'>
-                <h1>Test title</h1>
-                <h2>Secure Your Spot in the Safe Zone</h2>
+            <div className='hero-container'>
+                <h1>Secure Your Spot in the Safe Zone</h1>
             </div>
             <div className='spots-container'>
                 {spots.map(spot => (

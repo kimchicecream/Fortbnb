@@ -12,11 +12,13 @@ function Navigation({ isLoaded }) {
   return (
     <nav className='navigation-container'>
       <Link className='logo' to='/'>
-      <img className='logo-png' src='../../../public/navigation-logo.png' />
+      <img className='logo-png' src='../../../public/logo-purple.png' />
       </Link>
       { isLoaded && (sessionUser ? (
         <div className='logged-in'>
-          <Link to='/spots/new'>Create a New Spot</Link>
+          <Link to='/spots/new'>
+            <h4>Create a New Spot</h4>
+          </Link>
           <ProfileButton user={sessionUser} />
         </div>
       ) : (
