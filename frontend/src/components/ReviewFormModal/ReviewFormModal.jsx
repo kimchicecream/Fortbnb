@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { addReview } from '../../store/reviews';
-import {getReviewsForSpotsById} from '../../store/spots';
+import { getReviewsForSpotsById } from '../../store/spots';
 import './ReviewFormModal.css';
 
 function ReviewFormModal({ spotId }) {
@@ -28,6 +28,7 @@ function ReviewFormModal({ spotId }) {
                     .then(() => {
                         dispatch(getReviewsForSpotsById(spotId))})
                     .then(closeModal)
+                    window.location.reload();
                 if (props.addReviewToState) {
                     props.addReviewToState(response.data);
                 }

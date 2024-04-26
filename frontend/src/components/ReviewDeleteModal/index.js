@@ -1,3 +1,3 @@
-import ReviewDeleteModal form './ReviewDeleteModal';
+import ReviewDeleteModal from './ReviewDeleteModal';
 
-export default
+export default ReviewDeleteModal;

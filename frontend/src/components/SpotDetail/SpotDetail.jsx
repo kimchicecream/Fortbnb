@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { getSpotById, getReviewsForSpotsById, selectSpots } from '../../store/spots';
 import OpenModalButton from '../OpenModalButton';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
+import ReviewDeleteModal from '../ReviewDeleteModal/ReviewDeleteModal';
 // import { getAllReviews, selectAllReviews, getReviewById } from '../../store/reviews';
 
 function SpotDetail() {
@@ -141,7 +142,10 @@ function SpotDetail() {
                                     <div className='review-text'>{review.review}</div>
                                     <div className='star-rating'>{review.stars} stars</div>
                                     {sessionUser.id === review.userId && (
-                                        <button onClick={() => }
+                                        <OpenModalButton
+                                            buttonText='Delete'
+                                            modalComponent={<ReviewDeleteModal reviewId={review.id} spotId={spot.id} />}
+                                        />
                                     )}
                                 </div>
                             ))

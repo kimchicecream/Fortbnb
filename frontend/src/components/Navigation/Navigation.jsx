@@ -11,14 +11,16 @@ function Navigation({ isLoaded }) {
 
   return (
     <nav className='navigation-container'>
-      <Link className='logo' to='/'>Fortbnb</Link>
+      <Link className='logo' to='/'>
+      <img className='logo-png' src='../../../public/navigation-logo.png' />
+      </Link>
       { isLoaded && (sessionUser ? (
         <div className='logged-in'>
           <Link to='/spots/new'>Create a New Spot</Link>
           <ProfileButton user={sessionUser} />
         </div>
       ) : (
-        <div>
+        <div className='signup-login-container'>
           <OpenModalButton
             buttonText="Log In"
             modalComponent={<LoginFormModal />}

@@ -5,20 +5,24 @@
   padding: 0 20px;
   background-color: rgb(211, 187, 255);
   height: 70px;
-  top: 0;
-  margin: 0 60px;
 }
 
-.logo {
-  font-size: 50px;
+.logo-png {
+  height: 40px;
+  margin: 60px;
 }
 
-/* .session-links {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-} */
+.signup-login-container {
+  border: 2px solid red;
+}
+
+.logged-in {
+  border: 2px solid red;
+}
+
+.logged-in > Link {
+  text-decoration: none;
+}
 
 .profile-dropdown {
   position: absolute;

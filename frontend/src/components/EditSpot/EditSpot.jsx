@@ -33,9 +33,6 @@ function EditSpot() {
         if (description.length < 30) newErrors.description = "Description needs 30 or more characters";
         if (!name) newErrors.name = "Spot title is required";
         if (!price) newErrors.price = "Price per night is required";
-        // if (!imageURLs[0]) {
-        //     newErrors.imageURLs = "Preview Image URL is required";
-        // }
 
         setErrors(newErrors);
         return !Object.keys(newErrors).length;
