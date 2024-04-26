@@ -140,6 +140,9 @@ function SpotDetail() {
                                     <div className='review-createdAt'>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
                                     <div className='review-text'>{review.review}</div>
                                     <div className='star-rating'>{review.stars} stars</div>
+                                    {sessionUser.id === review.userId && (
+                                        <button onClick={() => }
+                                    )}
                                 </div>
                             ))
                         }
