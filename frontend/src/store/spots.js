@@ -9,6 +9,7 @@ const headers = {
 const LOAD_SPOTS = 'spots/loadSpots';
 const REMOVE_SPOT = 'spots/removeSpot';
 const ADD_REVIEW_TO_SPOT = 'spots/addReviewToSpot';
+const UPDATE_SPOT = 'spots/updateSpot'
 
 // action creators
 const loadSpots = spots => ({
@@ -101,7 +102,10 @@ export const updateSpot = (spotId, spot) => async dispatch => {
             body: JSON.stringify(spot)
         });
         const updatedSpot = await response.json();
-        dispatch(loadSpots([updatedSpot]));
+        dispatch({
+            type: 'UPDATE_SPOT',
+            payload: updatedSpot
+        })
         return updatedSpot;
     } catch (e) {
         return e;
@@ -137,28 +141,33 @@ function spotsReducer(state = initialState, action) {
         }
         case ADD_REVIEW_TO_SPOT: {
             if (!state[action.spotId]) return state;
-    const spot = state[action.spotId];
-    const existingReviews = spot.Reviews || [];
+            const spot = state[action.spotId];
+            const existingReviews = spot.Reviews || [];
 
-    // Create a map of existing review IDs for quick lookup
-    const existingReviewIds = new Set(existingReviews.map(review => review.id));
+            // Create a map of existing review IDs for quick lookup
+            const existingReviewIds = new Set(existingReviews.map(review => review.id));
 
-    // Filter the new reviews to only include those not already present
-    const newReviews = action.reviews.filter(review => !existingReviewIds.has(review.id));
+            // Filter the new reviews to only include those not already present
+            const newReviews = action.reviews.filter(review => !existingReviewIds.has(review.id));
 
-    // Merge the existing reviews with the new, non-duplicate reviews
-    const updatedReviews = [...existingReviews, ...newReviews];
+            // Merge the existing reviews with the new, non-duplicate reviews
+            const updatedReviews = [...existingReviews, ...newReviews];
 
-    return {
-        ...state,
-        [action.spotId]: {
-            ...spot,
-            Reviews: updatedReviews
+            return {
+                ...state,
+                [action.spotId]: {
+                    ...spot,
+                    Reviews: updatedReviews
+                }
+            };
         }
-    };
-        }
+        case UPDATE_SPOT:
+            return {
+                ...state,
+                [action.payload.id]: action.payload
+            };
         default:
-            return state;
+                return state;
     }
 }
 

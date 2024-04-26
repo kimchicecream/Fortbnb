@@ -9,6 +9,7 @@ import Home from './components/Home';
 import SpotDetail from './components/SpotDetail';
 import CreateSpot from './components/CreateSpot';
 import ManageSpots from './components/ManageSpots';
+import EditSpot from './components/EditSpot';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/spots',
         element: <ManageSpots />
+      },
+      {
+        path: '/spots/:spotId/edit',
+        element: <EditSpot />
       }
 
       // {

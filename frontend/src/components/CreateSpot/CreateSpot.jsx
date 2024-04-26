@@ -78,7 +78,7 @@ function CreateSpot() {
                 <h1>Create a spot</h1>
             </div>
             <section className='location-section'>
-                <h3>Where's your place located?</h3>
+                <h3>Where&apos;s your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation.</p>
                 <div className='input-area'>
                     <div className='country-form'>
@@ -114,7 +114,7 @@ function CreateSpot() {
 
             <section className='title-section'>
                 <h3>Create a title for your spot</h3>
-                <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
                 <div className='input-area'>
                     <div>
                         <p>Spot Title {errors.name && <span className="error">{errors.name}</span>}</p>
@@ -128,7 +128,7 @@ function CreateSpot() {
                 <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
                 <div className='input-area'>
                     <div>
-                        <p>Price per Night (USD) {errors.price && <span className="error">{errors.price}</span>}</p>
+                        <p>Price per night (USD) {errors.price && <span className="error">{errors.price}</span>}</p>
                         <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price per night (USD)" />
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './SpotItem.css';
 
-function SpotItem({ spot }) {
+function SpotItem({ spot, children }) {
     const navigate = useNavigate();
 
     const onClick = spotId => {
@@ -45,6 +45,7 @@ function SpotItem({ spot }) {
                 <p className='city-state'>{spot.city}, {spot.state}</p>
                 <p className='price'>{spot.price} vbucks per night</p>
             </div>
+            {children}
         </div>
     )
 }

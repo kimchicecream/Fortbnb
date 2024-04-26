@@ -1,11 +1,12 @@
 import './ManageSpots.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SpotItem from '../SpotItem';
 import { getAllSpots, selectAllSpots } from '../../store/spots.js';
 
 function ManageSpots() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const spots = useSelector(selectAllSpots);
     const userId = useSelector(state => state.session.user.id);
@@ -26,7 +27,11 @@ function ManageSpots() {
             <Link to='/spots/new'>Create a New Spot</Link>
             <div className='spots-owned-container'>
                 {ownedSpots.length > 0 ? (
-                    ownedSpots.map(spot => <SpotItem key={spot.id} spot={spot} />)
+                    ownedSpots.map(spot =>
+                        <SpotItem key={spot.id} spot={spot}>
+<                           Link to={`/spots/${spot.id}/edit`}>Edit</Link>
+                        </SpotItem>
+                    )
                 ) : (
                     <div>You have no spots listed. <Link to='/spots/new'>Create a new spot.</Link></div>
                 )}
