@@ -80,17 +80,17 @@ function SpotDetail() {
                             <img className='main-image' src={spot.SpotImages[0]?.url} alt={`Preview of ${spot.name}`} />
                         </div>
                         <div className='side-images-container'>
-                            <div className='top-left-container'>
-                                <img className='top-left-image' src={spot.SpotImages[1]?.url} alt='Top left image' />
+                            <div className='image-boxes' id='top-left-container'>
+                                {spot.SpotImages[1]?.url && <img className='top-left-image' src={spot.SpotImages[1]?.url} />}
                             </div>
-                            <div className='top-right-container'>
-                                <img className='top-right-image' src={spot.SpotImages[2]?.url} alt='Top right image' />
+                            <div className='image-boxes' id='top-right-container'>
+                                {spot.SpotImages[2]?.url && <img className='top-right-image' src={spot.SpotImages[2]?.url} />}
                             </div>
-                            <div className='bottom-left-container'>
-                                <img className='bottom-left-image' src={spot.SpotImages[3]?.url} alt='Bottom left image' />
+                            <div className='image-boxes' id='bottom-left-container'>
+                                {spot.SpotImages[3]?.url && <img className='bottom-left-image' src={spot.SpotImages[3]?.url} />}
                             </div>
-                            <div className='bottom-right-container'>
-                                <img className='bottom-right-image' src={spot.SpotImages[4]?.url} alt='Bottom right image' />
+                            <div className='image-boxes' id='bottom-right-container'>
+                                {spot.SpotImages[4]?.url && <img className='bottom-right-image' src={spot.SpotImages[4]?.url} />}
                             </div>
                         </div>
                     </div>

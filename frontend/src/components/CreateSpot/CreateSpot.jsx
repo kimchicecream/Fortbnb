@@ -16,7 +16,8 @@ function CreateSpot() {
     const [description, setDescription] = useState('');
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
-    const [imageURLs, setImageURLs] = useState(['']);
+    const [imageURLs, setImageURLs] = useState(['', '', '', '']);
+    const [previewImageURL, setPreviewImageURL] = useState(['']);
     const [errors, setErrors] = useState([]);
     const [submitted, setSubmitted] = useState(false);
 
@@ -31,9 +32,7 @@ function CreateSpot() {
         if (description.length < 30) newErrors.description = "Description needs 30 or more characters";
         if (!name) newErrors.name = "Spot title is required";
         if (!price) newErrors.price = "Price per night is required";
-        if (!imageURLs[0]) {
-            newErrors.imageURLs = "Preview Image URL is required";
-        }
+        if (!previewImageURL) newErrors.previewImageURL = "Preview Image URL is required";
 
         setErrors(newErrors);
         return !Object.keys(newErrors).length;
@@ -42,6 +41,12 @@ function CreateSpot() {
     useEffect(() => {
         window.scrollTo(0,0);
     }, []);
+
+    const handleImageUrlChange = (index, value) => {
+        const newImageURLs = [...imageURLs];
+        newImageURLs[index] = value;
+        setImageURLs(newImageURLs);
+    };
 
     async function onSubmit(e) {
         e.preventDefault();
@@ -54,24 +59,27 @@ function CreateSpot() {
             country, address, city, state, description, name, price
         }
 
-        const image = {
-            url: imageURLs,
-            preview: true,
-        }
+        // const image = {
+        //     url: imageURLs,
+        //     preview: true,
+        // }
 
         const newSpot = await dispatch(addSpot(spot));
         if (!newSpot.id) {
-            const {errors} = await newSpot.json();
+            const { errors } = await newSpot.json();
             setErrors(errors);
             return;
         }
 
-        const newImage = await dispatch(addSpotImage(newSpot.id, image));
-        if(!newImage.id) {
-            const { error } =await newImage.json();
-            setErrors(errors);
-            return;
+        if (previewImageURL) {
+            await dispatch(addSpotImage(newSpot.id, { url: previewImageURL, preview: true }));
         }
+
+        const imagePromises = imageURLs.filter(url => url !== '').map(url => {
+            return dispatch(addSpotImage(newSpot.id, { url, preview: false }));
+        });
+
+        await Promise.all(imagePromises);
 
         navigate(`/spots/${newSpot.id}`);
     };
@@ -142,13 +150,17 @@ function CreateSpot() {
                 <h3>Liven up your spot with photos</h3>
                 <p>Submit a link to at least one photo to publish your spot.</p>
                 <div className='input-area'>
-                    <input type="text" placeholder="Preview Image URL" value={imageURLs} onChange={(e) => setImageURLs(e.target.value)} />
+                    <input type="text" placeholder="Preview Image URL" value={previewImageURL} onChange={(e) => setPreviewImageURL(e.target.value)} />
                     {errors.imageURLs && <p className="error">{errors.imageURLs}</p>}
-
-                    <input type="text" placeholder="Image URL" value={imageURLs} onChange={(e) => setImageURLs(e.target.value)} />
-                    <input type="text" placeholder="Image URL" value={imageURLs} onChange={(e) => setImageURLs(e.target.value)} />
-                    <input type="text" placeholder="Image URL" value={imageURLs} onChange={(e) => setImageURLs(e.target.value)} />
-                    <input type="text" placeholder="Image URL" value={imageURLs} onChange={(e) => setImageURLs(e.target.value)} />
+                    {imageURLs.map((url, index) => (
+                        <input
+                            key={index}
+                            type="text"
+                            placeholder={`Image URL ${index + 1}`}
+                            value={url}
+                            onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                        />
+                    ))}
                 </div>
             </section>
 
