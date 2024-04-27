@@ -39,6 +39,10 @@ function CreateSpot() {
         return !Object.keys(newErrors).length;
     };
 
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, []);
+
     async function onSubmit(e) {
         e.preventDefault();
         if (!validateForm()) {

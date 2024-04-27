@@ -12,6 +12,7 @@ function Home() {
 
     useEffect(() => {
         dispatch(getAllSpots()).then(() => {
+            const idSet = new Set(spots.map(spot => spot.id));
             setIsLoaded(true);
         });
     }, [dispatch])
@@ -19,17 +20,20 @@ function Home() {
     if (!isLoaded) return null;
 
     return (
-        <div className='home-container'>
-            <div className='hero-container'>
-                <h1>Secure Your Spot in the Safe Zone</h1>
-            </div>
-            <div className='spots-container'>
-                {spots.map(spot => (
-                    <SpotItem key={spot.id} spot={spot} />
-                ))}
-            </div>
-        </div>
-
+        <>
+            {isLoaded && (
+                <div className='home-container'>
+                    <div className='hero-container'>
+                        <h1>Secure Your Spot in the Safe Zone</h1>
+                    </div>
+                    <div className='spots-container'>
+                        {spots.map((spot) => (
+                            <SpotItem key={spot.id} spot={spot} />
+                        ))}
+                    </div>
+                </div>
+            )}
+        </>
     )
 }
 

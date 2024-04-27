@@ -8,8 +8,8 @@ const headers = {
 // action types
 const LOAD_SPOTS = 'spots/loadSpots';
 const REMOVE_SPOT = 'spots/removeSpot';
-const ADD_REVIEW_TO_SPOT = 'spots/addReviewToSpot';
-const UPDATE_SPOT = 'spots/updateSpot'
+const UPDATE_SPOT = 'spots/updateSpot';
+const LOAD_SPOT_BY_ID = 'spots/loadSpotById';
 
 // action creators
 const loadSpots = spots => ({
@@ -22,10 +22,9 @@ const removeSpot = spotId => ({
     spotId
 });
 
-const addReviewToSpot = (spotId, reviews) => ({
-    type: ADD_REVIEW_TO_SPOT,
-    spotId,
-    reviews
+const loadSpotById = spots => ({
+    type: LOAD_SPOT_BY_ID,
+    spots
 });
 
 // thunk actions
@@ -42,21 +41,10 @@ export const getAllSpots = () => async dispatch => {
 
 export const getSpotById = spotId => async dispatch => {
     try {
-        const response = await csrfFetch(`/api/spots/${spotId}`);
+        const response = await fetch(`/api/spots/${spotId}`);
         const spot = await response.json();
-        dispatch(loadSpots([spot]));
+        dispatch(loadSpotById(spot));
         return spot;
-    } catch (e) {
-        return e;
-    }
-}
-
-export const getReviewsForSpotsById = spotId => async dispatch => {
-    try {
-        const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
-        const { Reviews:reviews } = await response.json();
-        dispatch(addReviewToSpot(+spotId, reviews));
-        return reviews;
     } catch (e) {
         return e;
     }
@@ -94,12 +82,12 @@ export const addSpotImage = (spotId, image) => async () => {
     }
 }
 
-export const updateSpot = (spotId, spot) => async dispatch => {
+export const updateSpot = (spotId, spotData) => async dispatch => {
     try {
         const response = await csrfFetch(`/api/spots/${spotId}`, {
             method: 'PUT',
             headers,
-            body: JSON.stringify(spot)
+            body: JSON.stringify(spotData)
         });
         const updatedSpot = await response.json();
         dispatch({
@@ -130,42 +118,35 @@ const initialState = {};
 function spotsReducer(state = initialState, action) {
     switch(action.type) {
         case LOAD_SPOTS: {
-            const newState = { ...state };
-            action.spots.forEach(spot => newState[spot.id] = spot)
-            return newState;
+            const newSpots = {};
+            action.spots.forEach(spot => newSpots[spot.id] = spot)
+            return newSpots;
         }
         case REMOVE_SPOT: {
             const updatedState = { ...state };
             delete updatedState[action.spotId];
             return updatedState;
         }
-        case ADD_REVIEW_TO_SPOT: {
-            if (!state[action.spotId]) return state;
-            const spot = state[action.spotId];
-            const existingReviews = spot.Reviews || [];
+        case UPDATE_SPOT:
+            const updatedSpot = action.payload;
+            const currentSpot = state[updatedSpot.id] || {};
 
-            // Create a map of existing review IDs for quick lookup
-            const existingReviewIds = new Set(existingReviews.map(review => review.id));
-
-            // Filter the new reviews to only include those not already present
-            const newReviews = action.reviews.filter(review => !existingReviewIds.has(review.id));
-
-            // Merge the existing reviews with the new, non-duplicate reviews
-            const updatedReviews = [...existingReviews, ...newReviews];
+            // Assuming your action includes new review count and average rating
+            updatedSpot.numReviews = updatedSpot.reviews.length;
+            updatedSpot.avgStarRating = updatedSpot.reviews.reduce((acc, review) => acc + review.stars, 0) / updatedSpot.reviews.length;
 
             return {
                 ...state,
-                [action.spotId]: {
-                    ...spot,
-                    Reviews: updatedReviews
+                [updatedSpot.id]: {
+                    ...currentSpot,
+                    ...updatedSpot
                 }
             };
-        }
-        case UPDATE_SPOT:
-            return {
-                ...state,
-                [action.payload.id]: action.payload
-            };
+        case LOAD_SPOT_BY_ID:
+        return {
+            ...state,
+            ["spotById"]: action.spots
+        };
         default:
                 return state;
     }

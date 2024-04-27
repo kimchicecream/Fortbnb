@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { addReview } from '../../store/reviews';
-import { getReviewsForSpotsById } from '../../store/spots';
+import { getReviewsForSpotsById } from '../../store/reviews';
 import './ReviewFormModal.css';
 
 function ReviewFormModal({ spotId }) {
@@ -18,20 +18,16 @@ function ReviewFormModal({ spotId }) {
         setStars(newRating);
     }
 
-    const canSubmit = reviewText.length >= 10;
+    const canSubmit = reviewText.length >= 10 && stars > 0;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (canSubmit) {
             try {
-                const response = await dispatch(addReview(spotId, { review: reviewText, stars }))
-                    .then(() => {
-                        dispatch(getReviewsForSpotsById(spotId))})
-                    .then(closeModal)
-                    window.location.reload();
-                if (props.addReviewToState) {
-                    props.addReviewToState(response.data);
-                }
+                const newReview = { review: reviewText, stars };
+                await dispatch(addReview(spotId, newReview))
+                    .then(() => dispatch(getReviewsForSpotsById(spotId)))
+                    .then(closeModal);
             } catch (err) {
                 setError(err.message);
             }
@@ -39,7 +35,7 @@ function ReviewFormModal({ spotId }) {
     }
 
     return (
-        <form onSubmit={handleSubmit} className='review-form-container'>
+        <form onSubmit={(e) => handleSubmit(e)} className='review-form-container'>
             <div className='review-form-title-container'>
                 <h1>How was your stay?</h1>
             </div>

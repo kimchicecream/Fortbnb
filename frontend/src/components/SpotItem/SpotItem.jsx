@@ -4,6 +4,8 @@ import './SpotItem.css';
 function SpotItem({ spot, children }) {
     const navigate = useNavigate();
 
+    // const [isLoaded, setIsLoaded] = useState(false);
+
     const onClick = spotId => {
         navigate(`/spots/${spotId}`);
     };
@@ -33,20 +35,21 @@ function SpotItem({ spot, children }) {
     }
 
     return (
-        <div className='spotitem-container' title={`${spot.name}`}>
-            <div className='image-container' onClick={() => onClick(spot.id)}>
-                <img className='image' src={imageUrl} alt={`Preview of ${spot.name}`} />
-                <div className='rating-overlay'>
-                    {displayStar()}
-                    <div className='rating'>{displayRating()}</div>
+                <div className='spotitem-container' title={`${spot.name}`}>
+                <div className='image-container' onClick={() => onClick(spot.id)}>
+                    <img className='image' src={imageUrl} alt={`Preview of ${spot.name}`} />
+                    <div className='rating-overlay'>
+                        {displayStar()}
+                        <div className='rating'>{spot.avgRating ? <p className='avg-rating'>{spot.avgRating.toFixed(1)}</p> : <p className='avg-rating new'>NEW</p>}</div>
+                    </div>
                 </div>
+                <div className='info-container' onClick={() => onClick(spot.id)}>
+                    <p className='city-state'>{spot.city}, {spot.state}</p>
+                    <p className='price'>{spot.price} vbucks per night</p>
+                </div>
+                {children}
             </div>
-            <div className='info-container' onClick={() => onClick(spot.id)}>
-                <p className='city-state'>{spot.city}, {spot.state}</p>
-                <p className='price'>{spot.price} vbucks per night</p>
-            </div>
-            {children}
-        </div>
+
     )
 }
 
