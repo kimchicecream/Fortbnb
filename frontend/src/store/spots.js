@@ -130,11 +130,8 @@ function spotsReducer(state = initialState, action) {
         case UPDATE_SPOT:
             const updatedSpot = action.payload;
             const currentSpot = state[updatedSpot.id] || {};
-
-            // Assuming your action includes new review count and average rating
             updatedSpot.numReviews = updatedSpot.reviews.length;
             updatedSpot.avgStarRating = updatedSpot.reviews.reduce((acc, review) => acc + review.stars, 0) / updatedSpot.reviews.length;
-
             return {
                 ...state,
                 [updatedSpot.id]: {

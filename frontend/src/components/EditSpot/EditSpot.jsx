@@ -47,7 +47,6 @@ function EditSpot() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // validations
         if (!validateForm()) {
             setSubmitted(true);
             return;

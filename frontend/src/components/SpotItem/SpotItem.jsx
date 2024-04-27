@@ -4,8 +4,6 @@ import './SpotItem.css';
 function SpotItem({ spot, children }) {
     const navigate = useNavigate();
 
-    // const [isLoaded, setIsLoaded] = useState(false);
-
     const onClick = spotId => {
         navigate(`/spots/${spotId}`);
     };

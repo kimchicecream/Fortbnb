@@ -12,11 +12,10 @@ function ReviewDeleteModal({ reviewId, spotId }) {
         try {
             await dispatch(deleteReview(reviewId));
             await dispatch(getReviewsForSpotsById(spotId));
-            await dispatch(getSpotById(spotId)); // Update spot details if needed, like average rating or reviews count
+            await dispatch(getSpotById(spotId));
             closeModal();
         } catch (error) {
             console.error('Failed to delete review:', error);
-            // Optionally handle the error, e.g., show an error message to the user
         }
     }
 
