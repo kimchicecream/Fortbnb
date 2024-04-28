@@ -37,11 +37,12 @@ function Home() {
                         </div>
                     </div>
                     <div className='spots-container'>
-                        <h2>Featured Spots</h2>
-
+                        <h1>Featured</h1>
+                    <div className='display-spots'>
                         {spots.map((spot) => (
                             <SpotItem key={spot.id} spot={spot} />
                         ))}
+                    </div>
                         </div>
                 </div>
             )}

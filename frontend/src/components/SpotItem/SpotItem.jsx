@@ -33,21 +33,27 @@ function SpotItem({ spot, children }) {
     }
 
     return (
-                <div className='spotitem-container' title={`${spot.name}`}>
-                <div className='image-container' onClick={() => onClick(spot.id)}>
-                    <img className='image' src={imageUrl} alt={`Preview of ${spot.name}`} />
-                    <div className='rating-overlay'>
-                        {displayStar()}
-                        <div className='rating'>{spot.avgRating ? <p className='avg-rating'>{spot.avgRating.toFixed(1)}</p> : <p className='avg-rating new'>NEW</p>}</div>
+        <div className='spotitem-container' title={`${spot.name}`}>
+            <div className='image-container' onClick={() => onClick(spot.id)}>
+                <img className='image' src={imageUrl} alt={`Preview of ${spot.name}`} />
+            </div>
+            <div className='info-container' onClick={() => onClick(spot.id)}>
+                <div className='city-state-price'>
+                    <p className='city-state'>{spot.city}, {spot.state}</p>
+                    <div className='price-container'>
+                        <img id='vbucks' src='../../../public/vbucks.png' />
+                        <p className='price'>
+                            {spot.price.toLocaleString()} / night
+                        </p>
                     </div>
                 </div>
-                <div className='info-container' onClick={() => onClick(spot.id)}>
-                    <p className='city-state'>{spot.city}, {spot.state}</p>
-                    <p className='price'>{spot.price} vbucks per night</p>
+                <div className='rating-overlay'>
+                    {displayStar()}
+                    <div className='rating'>{spot.avgRating ? <p className='avg-rating'>{spot.avgRating.toFixed(1)}</p> : <p className='avg-rating new'>NEW</p>}</div>
                 </div>
-                {children}
             </div>
-
+            {children}
+        </div>
     )
 }
 

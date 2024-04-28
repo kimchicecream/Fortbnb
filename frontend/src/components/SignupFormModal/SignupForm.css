@@ -57,11 +57,18 @@
 
 .signup-modal-container .errors {
     color: red;
+    font-size: 13px;
 }
 
 .signup-modal-container .input-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.signup-modal-container .input-container p {
+    justify-content: center;
 }
 
 .signup-modal-container .signup-button h4 {
