@@ -26,8 +26,8 @@ function SpotDetail() {
             dispatch(getReviewsForSpotsById(spotId))
     }, [dispatch, spotId]);
 
-    const onClick = () => {
-        alert('Feature coming soon');
+    const noFeature = () => {
+        alert('Feature coming soon!');
     }
 
     const displayRating = () => {
@@ -63,8 +63,12 @@ function SpotDetail() {
     }
 
     const userIsNotOwner = sessionUser && sessionUser.id !== spot?.Owner?.id
-    const hasReviews = reviews && Array.isArray(reviews) && reviews.length > 0;
-    const userHasReviewed = reviews && Array.isArray(reviews) && reviews.some(review => review.userId === sessionUser?.id)
+    const hasReviews = reviews && Object.keys(reviews).length > 0;
+    const userHasReviewed = reviews && Object.values(reviews).some(review => review.userId === sessionUser?.id)
+
+    console.log("Is Loaded:", isLoaded);
+    console.log("Has Reviews:", hasReviews);
+    console.log("User Has Reviewed:", userHasReviewed);
 
     return (
         <>
@@ -104,60 +108,63 @@ function SpotDetail() {
                                 {displayStar()}
                                 <div className='rating'>{displayRating()}</div>
                             </div>
-                            <button onClick={onClick}>Reserve</button>
+                            <button onClick={noFeature}>Reserve</button>
                         </div>
                     </div>
 
                     <div className='reviews-container'>
-                        {isLoaded && reviews && spot ? (
+                        {isLoaded && reviews ? (
                             <>
                                 <div className='rating-reviews'>
                                     {displayStar()}
                                     <div className='rating-review'>{displayRating()}</div>
                                 </div>
+                                {/* if there are no reviews */}
+                                {!hasReviews && (
+                                    <div className='no-reviews'>Be the first to post a review!</div>
+                                )}
                                 {/* if there is a sessionUser and user is not the owner and user has not already reviewed */}
                                 {isLoaded  && sessionUser && userIsNotOwner && !userHasReviewed && (
                                     <OpenModalButton
                                         buttonText='Post Your Review'
-                                        modalComponent={<ReviewFormModal user={sessionUser} spotId={spot.id}/>}
+                                        modalComponent={<ReviewFormModal user={sessionUser} spotId={spot.id} />}
                                     />
                                 )}
                                 <div className='user-reviews'>
-                                {reviews && Object.values(reviews).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                                    .map(review => (
-                                        <div key={review.id} className='review'>
-                                            <div className='review-owner'>{review.User?.firstName}</div>
-                                            <div className='review-createdAt'>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
-                                            <div className='review-text'>{review.review}</div>
-                                            <div className='star-rating'>{review.stars} stars</div>
-                                            {sessionUser && sessionUser.id === review.userId && (
-                                                <OpenModalButton
-                                                    buttonText='Delete'
-                                                    modalComponent={<ReviewDeleteModal reviewId={review.id} spotId={spot.id} />}
-                                                />
-                                            )}
-                                        </div>
-                                    ))
-                                }
+                                    {reviews && Object.values(reviews).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                                        .map(review => (
+                                            <div key={review.id} className='review'>
+                                                <div className='review-owner'>{review.User?.firstName}</div>
+                                                <div className='review-createdAt'>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
+                                                <div className='review-text'>{review.review}</div>
+                                                <div className='star-rating'>{review.stars} stars</div>
+                                                {sessionUser && sessionUser.id === review.userId && (
+                                                    <OpenModalButton
+                                                        buttonText='Delete'
+                                                        modalComponent={<ReviewDeleteModal reviewId={review.id} spotId={spot.id} />}
+                                                    />
+                                                )}
+                                            </div>
+                                        ))
+                                    }
                                 </div>
                             </>
                         ) : (
                             <>
                                 <div className='rating-reviews'>
                                     {displayStar()}
-                                <div className='rating-review'>{displayRating()}</div>
+                                    <div className='rating-review'>
+                                        {displayRating()}
+                                    </div>
                                 </div>
-                                {/* if there are no reviews */}
-                                {!hasReviews && (
-                                    <div className='no-reviews'>Be the first to post a review!</div>
-                                )}
                                 {/* if a session user is logged in and isn't the owner of the spot and hasnt already reviewed */}
-                                {isLoaded && sessionUser && userIsNotOwner && !userHasReviewed && (
+                                {sessionUser && userIsNotOwner && !userHasReviewed && (
                                     <OpenModalButton
                                         buttonText='Post Your Review'
                                         modalComponent={<ReviewFormModal spotId={spot.id} />}
                                     />
                                 )}
+
                             </>
                         )}
                     </div>

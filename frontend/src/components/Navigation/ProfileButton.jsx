@@ -34,6 +34,11 @@ function ProfileButton({ user }) {
     navigate('/');
   };
 
+  const noFeature = (e) => {
+    e.preventDefault();
+    alert('Feature coming soon!');
+}
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -49,20 +54,43 @@ function ProfileButton({ user }) {
         </button>
       </div>
       <div className={ulClassName} ref={ulRef}>
-        <div className='divider'>
+        <div className='name-and-email'>
           <h4>Hello, {user.firstName}</h4>
           <p>{user.email}</p>
+          <h5>{user.username}</h5>
         </div>
-        <div className='divider'>
-          <Link to='/spots' onClick={() => setShowMenu(false)}>Manage Spots</Link>
+
+        <div className='divider'></div>
+
+        <div className='account-messages'>
+          <Link to='/account' onClick={(e) => noFeature(e)}>
+            <p>Account</p>
+          </Link>
+          <Link to='/messages' onClick={(e) => noFeature(e)}>
+            <p>Messages</p>
+          </Link>
         </div>
-        <div className='divider'>
-          <Link to='/reviews' onClick={() => setShowMenu(false)}>Manage Reviews</Link>
+
+        <div className='divider'></div>
+
+        <div className='manage'>
+          <Link className='manage-spots' to='/spots' onClick={() => setShowMenu(false)}>
+            <p>Manage Spots</p>
+          </Link>
+          <Link className='manage-reviews' to='/reviews' onClick={(e) => noFeature(e)}>
+            <p>Manage Reviews</p>
+          </Link>
         </div>
-        <div className='divider'>
-          <div className='logout-button'>
-            <button onClick={logout}>Log Out</button>
-          </div>
+
+        <div className='divider'></div>
+
+        <div className='footer-section'>
+          <Link to='/help' onClick={(e) => noFeature(e)}>
+            <p>Help</p>
+          </Link>
+          <button onClick={logout}>
+            <p>Log Out</p>
+          </button>
         </div>
       </div>
     </div>

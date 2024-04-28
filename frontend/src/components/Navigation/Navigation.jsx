@@ -16,7 +16,7 @@ function Navigation({ isLoaded }) {
       </Link>
       { isLoaded && (sessionUser ? (
         <div className='logged-in'>
-          <Link to='/spots/new'>
+          <Link className='create-spot-button' to='/spots/new'>
             <h4>Create a New Spot</h4>
           </Link>
           <ProfileButton user={sessionUser} />

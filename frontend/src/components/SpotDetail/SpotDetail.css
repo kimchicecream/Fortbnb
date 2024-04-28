@@ -28,7 +28,8 @@
     object-position: center;
     width: 100%;
     height: 100%;
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
 }
 
 .side-images-container {
@@ -48,7 +49,6 @@
     object-position: center;
     width: 100%;
     height: 100%;
-    border-radius: 15px;
 }
 
 .top-right-image {
@@ -56,7 +56,7 @@
     object-position: center;
     width: 100%;
     height: 100%;
-    border-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .bottom-left-image {
@@ -64,7 +64,6 @@
     object-position: center;
     width: 100%;
     height: 100%;
-    border-radius: 15px;
 }
 
 .bottom-right-image {
@@ -72,7 +71,7 @@
     object-position: center;
     width: 100%;
     height: 100%;
-    border-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .description-container {
