@@ -8,13 +8,13 @@ function SpotItem({ spot, children }) {
         navigate(`/spots/${spotId}`);
     };
 
-    const displayRating = () => {
-        if (spot.avgRating !== null) {
-            return <p className='avg-rating'>{spot.avgRating.toFixed(1)}</p>
-        } else {
-            return <p className='avg-rating new'>NEW</p>
-        }
-    }
+    // const displayRating = () => {
+    //     if (spot.avgRating !== null) {
+    //         return <p className='avg-rating'>{spot.avgRating.toFixed(1)}</p>
+    //     } else {
+    //         return <p className='avg-rating new'>NEW</p>
+    //     }
+    // }
 
     const imageUrl = spot.SpotImages && spot.SpotImages.length > 0 ? spot.SpotImages[0].url : spot.previewImage;
 

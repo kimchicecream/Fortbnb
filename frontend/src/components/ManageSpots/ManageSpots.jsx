@@ -1,6 +1,6 @@
 import './ManageSpots.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import SpotItem from '../SpotItem';
 import { getAllSpots, selectAllSpots } from '../../store/spots.js';
@@ -8,7 +8,6 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton.jsx';
 import ConfirmDeleteModal from '../ConfirmDeleteModal/ConfirmDeleteModal.jsx';
 
 function ManageSpots() {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const spots = useSelector(selectAllSpots);
     const userId = useSelector(state => state.session.user.id);
