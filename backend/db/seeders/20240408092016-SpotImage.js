@@ -17,6 +17,11 @@ module.exports = {
         preview: true
       },
       {
+        spotId: 1,
+        url: 'https://i.postimg.cc/Z5CbFC29/Bunker-Hut-1.webp',
+        preview: true
+      },
+      {
         spotId: 2,
         url: 'https://i.postimg.cc/Z5CbFC29/Bunker-Hut-1.webp',
         preview: true
