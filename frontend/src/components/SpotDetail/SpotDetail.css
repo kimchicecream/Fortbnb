@@ -1,14 +1,10 @@
 .spot-details {
     margin: 20px 120px 0 120px;
-    color:
+    color: rgb(138, 43, 226);
 }
 
 .spot-details .title-container {
     border: 2px solid red;
-}
-
-.title-container .spot-details {
-
 }
 
 .images-container {

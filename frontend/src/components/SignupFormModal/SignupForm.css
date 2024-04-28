@@ -1,3 +1,128 @@
 .signup-modal-container {
-    z-index: 1020;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 10px 0;
+    width: 450px;
+    color: rgb(138, 43, 226);
+}
+
+/* ---------------- HEADER ---------------- */
+
+.signup-modal-container .top-divider {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 9px;
+
+    width: 100%;
+}
+
+.signup-modal-container .top-divider span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: rgba(137, 43, 226, 0.178);
+}
+
+/* ---------------- SIGN UP FORM + BUTTON ---------------- */
+
+.signup-modal-container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.signup-modal-container .signup-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 5px;
+
+    width: 380px;
+    height: 45px;
+
+    background: rgb(138,43,226);
+    border: none;
+    border-radius: 10px;
+}
+
+.signup-modal-container .errors {
+    color: red;
+}
+
+.signup-modal-container .input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-modal-container .signup-button h4 {
+    color: white;
+}
+
+.signup-modal-container .signup-button:disabled {
+    background-color: rgba(30, 1, 57, 0.42);
+}
+
+.signup-modal-container input {
+    width: 380px;
+    border: none;
+    padding: 10px;
+    background-color: rgb(224, 206, 225);
+}
+
+.signup-modal-container input:focus {
+    outline: none;
+}
+
+.signup-modal-container input:focus::placeholder {
+    color: transparent;
+}
+
+.signup-modal-container input::placeholder {
+    color: rgb(138,43,226);
+}
+
+
+/* ---------------- FOOTER + BUTTONS ---------------- */
+
+.signup-modal-container .bottom-divider {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    gap: 15px;
+    width: 100%
+}
+
+.signup-modal-container .bottom-divider span {
+    display: block;
+    height: 2px;
+    width: 190px;
+    background-color: rgba(137, 43, 226, 0.178);
+}
+
+.already-have-account p {
+    font-size: 15px;
+}
+
+.already-have-account {
+    margin: 10px 0;
+}
+
+.login-letters {
+    color: rgb(138, 43, 226);
+    all: unset;
+    text-decoration: underline;
 }

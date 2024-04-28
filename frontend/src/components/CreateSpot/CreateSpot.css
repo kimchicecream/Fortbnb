@@ -2,11 +2,6 @@
     color: red;
 }
 
-label {
-    display: flex;
-    flex-direction: row;
-}
-
 form {
     margin: 20px 500px;
 }
@@ -20,7 +15,7 @@ input {
     margin-top: 10px;
 }
 
-.input-area > div {
+.input-area  div {
     margin-top: 10px;
 }
 

@@ -59,11 +59,6 @@ function CreateSpot() {
             country, address, city, state, description, name, price
         }
 
-        // const image = {
-        //     url: imageURLs,
-        //     preview: true,
-        // }
-
         const newSpot = await dispatch(addSpot(spot));
         if (!newSpot.id) {
             const { errors } = await newSpot.json();

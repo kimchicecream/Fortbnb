@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
   return (
     <nav className='navigation-container'>
       <Link className='logo' to='/'>
-      <img className='logo-png' src='../../../public/logo-purple.png' />
+      <img className='logo-png' src='../../../logo-purple.png' />
       </Link>
       { isLoaded && (sessionUser ? (
         <div className='logged-in'>

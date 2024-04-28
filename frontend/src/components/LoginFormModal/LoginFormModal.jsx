@@ -39,8 +39,8 @@ function LoginFormModal() {
         <span></span>
       </div>
       <form onSubmit={handleSubmit}>
-      <label className='input-container'>
-          <p>Username or Email</p>
+        <label className='input-container'>
+          {/* <p><h4>Username or Email</h4></p> */}
           <input
             type="text"
             placeholder='Username or Email'
@@ -50,7 +50,7 @@ function LoginFormModal() {
           />
         </label>
         <label className='input-container'>
-          <p>Password</p>
+          {/* <p><h4>Password</h4></p> */}
           <input
             type="password"
             placeholder='Password'
@@ -72,22 +72,26 @@ function LoginFormModal() {
         <span></span>
       </div>
       <div className='bottom-buttons'>
-        <button className='google-button'>
-          <img src='../../../public/logos/google.png' />
+        <button className='continue-with-button'>
+          <img src='../../../logos/google.png' />
           <h4>Continue with Google</h4>
         </button>
+        <button className='continue-with-button'>
+          <img src='../../../logos/steam.png' />
+          <h4>Continue with Steam</h4>
+        </button>
+        <button className='continue-with-button'>
+          <img src='../../../logos/epic.png' />
+          <h4>Continue with Epic Games</h4>
+        </button>
         <button className='demo' onClick={demoClick}>
+          <img src='../../../logos/demo.png' />
           <h4>Continue with a demo user</h4>
         </button>
         <div className='dont-have-account'>
-          <p>
-            Don&apos;t have an account?
-            <OpenModalButton
-              buttonText="Sign up here"
-              modalComponent={<SignupFormModal />}
-              className='signup-letters'
-            />
-          </p>
+            <p>
+                Don&apos;t have an account? <OpenModalButton className='signup-letters' buttonText=' Sign up here' modalComponent={<SignupFormModal />} />.
+            </p>
         </div>
       </div>
     </div>

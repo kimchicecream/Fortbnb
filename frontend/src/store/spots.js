@@ -127,7 +127,7 @@ function spotsReducer(state = initialState, action) {
             delete updatedState[action.spotId];
             return updatedState;
         }
-        case UPDATE_SPOT:
+        case UPDATE_SPOT: {
             const updatedSpot = action.payload;
             const currentSpot = state[updatedSpot.id] || {};
             updatedSpot.numReviews = updatedSpot.reviews.length;
@@ -138,7 +138,8 @@ function spotsReducer(state = initialState, action) {
                     ...currentSpot,
                     ...updatedSpot
                 }
-            };
+            }
+        }
         case LOAD_SPOT_BY_ID:
         return {
             ...state,

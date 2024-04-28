@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
+import OpenModalButton from '../OpenModalButton';
+import LoginFormModal from '../LoginFormModal';
 import './SignupForm.css';
 
 function SignupFormModal() {
@@ -50,69 +52,98 @@ function SignupFormModal() {
   return (
     <div className='signup-modal-container'>
       <h1>Sign Up</h1>
+      <div className='top-divider'>
+        <span></span>
+      </div>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email
+        <label className='input-container'>
+          <p> {errors.email && <p className='errors'>{errors.email}</p>}</p>
           <input
             type="text"
+            placeholder='Email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
+        <label className='input-container'>
+          <p> {errors.username && <p className='errors'>{errors.username}</p>}</p>
           <input
             type="text"
+            placeholder='Username'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
+        <label className='input-container'>
+          <p> {errors.firstName && <p className='errors'>{errors.firstName}</p>}</p>
           <input
             type="text"
+            placeholder='First name'
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
+        <label className='input-container'>
+          <p> {errors.lastName && <p className='errors'>{errors.lastName}</p>}</p>
           <input
             type="text"
+            placeholder='Last name'
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
+        <label className='input-container'>
+          <p> {errors.password && <p className='errors'>{errors.password}</p>}</p>
           <input
             type="password"
+            placeholder='Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
+        <label className='input-container'>
+          <p> {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}</p>
           <input
             type="password"
+            placeholder='Confirm password'
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit" disabled={disableButton}>Sign Up</button>
+        <button type="submit" className='signup-button' disabled={disableButton}>
+          <h4>Join Fortbnb!</h4>
+        </button>
       </form>
+      <div className='bottom-divider'>
+        <span></span>
+        <p>or</p>
+        <span></span>
+      </div>
+      <div className='bottom-buttons'>
+        <button className='continue-with-button'>
+          <img src='../../../logos/google.png' />
+          <h4>Continue with Google</h4>
+        </button>
+        <button className='continue-with-button'>
+          <img src='../../../logos/steam.png' />
+          <h4>Continue with Steam</h4>
+        </button>
+        <button className='continue-with-button'>
+          <img src='../../../logos/epic.png' />
+          <h4>Continue with Epic Games</h4>
+        </button>
+        <div className='already-have-account'>
+            <p>
+                Already have an account? <OpenModalButton className='login-letters' buttonText=' Click here to login' modalComponent={<LoginFormModal />} />.
+            </p>
+        </div>
+      </div>
     </div>
   );
 }

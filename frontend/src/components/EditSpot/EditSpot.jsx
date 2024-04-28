@@ -20,7 +20,6 @@ function EditSpot() {
     const [name, setName] = useState(spot?.name || '');
     const [price, setPrice] = useState(spot?.price || '');
     const [errors, setErrors] = useState([]);
-    const [submitted, setSubmitted] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
@@ -48,7 +47,6 @@ function EditSpot() {
         e.preventDefault();
 
         if (!validateForm()) {
-            setSubmitted(true);
             return;
         }
 

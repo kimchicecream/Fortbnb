@@ -59,11 +59,6 @@
   margin: 0 80px;
 }
 
-.signup-login-container {
-  margin: 0 80px;
-  border: 2px solid red;
-}
-
 .logged-in {
   display: flex;
   flex-direction: row;
@@ -99,6 +94,11 @@
   text-decoration: none;
 }
 
+.logged-in a:visited {
+  color: rgb(138, 43, 226);
+  text-decoration: none;
+}
+
 .profile-dropdown {
   position: absolute;
   top: 70px;
@@ -112,6 +112,42 @@
   display: none;
 }
 
-.signup-button, .login-button {
-  height: 45px;
+/* -------------- LOGIN AND SIGNUP BUTTONS -------------- */
+/* MAIN CONTA */
+.signup-login-container {
+  margin: 0 80px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.signup-login-container .signup-button, .login-button {
+  height: 20px;
+  width: 90px;
+}
+
+.signup-login-container .login-button {
+  all: unset;
+  color: rgb(138, 43, 226);
+  padding: 10px 15px;
+  font-weight: bold;
+}
+
+.signup-login-container .login-button:hover {
+  background-color: rgb(228, 212, 230);
+  border-radius: 10px;
+}
+
+.signup-login-container .signup-button {
+  all: unset;
+  background-color: rgb(138, 43, 226);
+  padding: 10px 15px;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.signup-login-container .signup-button:hover {
+  color: rgb(138, 43, 226);
+  background-color: rgb(220, 183, 255);
 }
