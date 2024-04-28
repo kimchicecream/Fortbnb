@@ -64,8 +64,12 @@
   flex-direction: row;
   align-items: center;
 
-  gap: 20px;
+  gap: 30px;
   margin: 0 80px;
+}
+
+.create-spot-button {
+  all: unset;
 }
 
 .create-spot-button h4 {
@@ -143,6 +147,7 @@
   padding: 5px 0px 5px 15px;
   font-size: 20px;
   font-weight: bold;
+  color: rgb(138, 43, 226);
 }
 
 .account-messages a p:hover {
