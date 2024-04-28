@@ -163,6 +163,7 @@
 .manage a p {
   padding: 5px 0px 5px 15px;
   font-size: 20px;
+  color: rgb(138, 43, 226);
 }
 
 .manage a p:hover {
