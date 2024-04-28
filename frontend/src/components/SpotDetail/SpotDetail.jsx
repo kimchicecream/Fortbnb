@@ -62,6 +62,16 @@ function SpotDetail() {
         }
     }
 
+    const checkNumStars = (stars) => {
+        if (stars < 1) {
+            return '';
+        } else if (stars === 1) {
+            return '1 star';
+        } else {
+            return `${stars} stars`
+        }
+    }
+
     const userIsNotOwner = sessionUser && sessionUser.id !== spot?.Owner?.id
     const hasReviews = reviews && Object.keys(reviews).length > 0;
     const userHasReviewed = reviews && Object.values(reviews).some(review => review.userId === sessionUser?.id)
@@ -100,17 +110,31 @@ function SpotDetail() {
                     </div>
 
                     <div className='description-container'>
-                        <div className='host-name'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</div>
-                        <div className='description'>{spot.description}</div>
-                        <div className='button-container'>
-                            <p className='price'>{spot.price} vbucks per night</p>
-                            <div className='rating-and-star'>
-                                {displayStar()}
-                                <div className='rating'>{displayRating()}</div>
+                        <div className='name-and-description'>
+                            <div className='host-name'>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</div>
+                            <div className='desc-divider'></div>
+                            <div className='description'>{spot.description}</div>
+                        </div>
+                        <div className='reserve-container'>
+                            <div className='price-review'>
+                                <div className='price-container'>
+                                    <div className='vbuck-i'>
+                                        <img id='vbucks' src='../../../public/vbucks.png' />
+                                    </div>
+                                    <p className='v-price'>{spot.price.toLocaleString()}</p>
+                                    <p className='per-night'>per night</p>
+                                </div>
+                                <div className='rating-and-star'>
+                                    {displayStar()}
+                                    <div className='rating'>{displayRating()}</div>
+                                </div>
                             </div>
+                            <div className='desc-divider'></div>
                             <button onClick={noFeature}>Reserve</button>
                         </div>
                     </div>
+
+                    <div className='desc-divider'></div>
 
                     <div className='reviews-container'>
                         {isLoaded && reviews ? (
@@ -135,9 +159,11 @@ function SpotDetail() {
                                         .map(review => (
                                             <div key={review.id} className='review'>
                                                 <div className='review-owner'>{review.User?.firstName}</div>
-                                                <div className='review-createdAt'>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
+                                                <div className='stars-date'>
+                                                    <div className='star-rating'>{checkNumStars(review.stars)}</div>
+                                                    <div className='review-createdAt'>{new Date(review.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
+                                                </div>
                                                 <div className='review-text'>{review.review}</div>
-                                                <div className='star-rating'>{review.stars} stars</div>
                                                 {sessionUser && sessionUser.id === review.userId && (
                                                     <OpenModalButton
                                                         buttonText='Delete'

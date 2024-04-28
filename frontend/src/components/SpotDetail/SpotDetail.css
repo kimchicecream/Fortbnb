@@ -3,9 +3,6 @@
     color: rgb(138, 43, 226);
 }
 
-.spot-details .title-container {
-}
-
 .spot-details .spot-name {
     font-size: 40px;
     font-weight: bold;
@@ -82,24 +79,137 @@
     border-bottom-right-radius: 15px;
 }
 
+/* -------------- DESCRIPTION CONTAINER -------------- */
 .description-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     margin-top: 20px;
-
-    border: 2px solid red;
 }
 
-.reviews-container {
-    margin-top: 20px;
-    border-top: 2px solid gray;
+.description-container .name-and-description {
+    flex-direction: column;
+    width: 750px;
 }
+
+.name-and-description .desc-divider {
+    height: 2px;
+    width: 100%;
+    margin: 10px 0;
+    background-color: rgba(137, 43, 226, 0.178);
+}
+
+.name-and-description .host-name {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+/* -----  RESERVE CONTAINER ----- */
+.description-container .reserve-container {
+    position: relative;
+    width: 400px;
+    height: 100%;
+    padding: 15px;
+    border-radius: 10px;;
+    background-color: rgb(138, 43, 226);
+    color: rgb(242, 224, 244);
+}
+
+/* ----- PRICE CONTAINER ----- */
+.description-container .reserve-container .price-review {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.description-container .reserve-container .price-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.description-container .price-container .v-price {
+    display: flex;
+    align-items: flex-end;
+    padding: 0;
+    gap: 5px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.price-container .per-night {
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 2.2px;
+    margin-left: 4px;
+}
+
+.price-container #vbucks {
+    height: 21px;
+    margin-right: 3px;
+}
+/* --------------------------- */
+
 
 .rating-and-star {
     display: flex;
     flex-direction: row;
+    gap: 5px;
+    font-size: 20px
+}
+
+.reserve-container .desc-divider {
+    height: 2px;
+    width: 100%;
+    margin: 10px 0;
+    background-color: rgba(242, 224, 244, 0.348);
+}
+
+.rating.new {
+    font-weight: bold;
+    font-style: italic;
+    padding-right: 9px;
+}
+
+/* ------- BUTTON ------- */
+.reserve-container button {
+    all: unset;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 12px 0;
+    width: 100%;
+
+    border-radius: 10px;
+    background-color: rgb(242, 224, 244);
+
+    color: rgb(138, 43, 226);
+    font-weight: bold;
+}
+
+.reserve-container button:hover {
+    background-color: rgb(198, 138, 255);
+    color: rgb(242, 224, 244);
+}
+/* ---------------------- */
+
+.spot-details .desc-divider {
+    height: 2px;
+    width: 100%;
+    margin: 10px 0;
+    background-color: rgba(137, 43, 226, 0.178);
+}
+
+/* ------ REVIEWS CONTAINER ------ */
+.reviews-container {
+    padding: 20px 0;
+
+    border: 2px solid red;
 }
 
 .rating-reviews {
-    margin-top: 20px;
     display: flex;
     flex-direction: row;
 }
@@ -109,9 +219,26 @@
     max-height: 24px;
 }
 
-.user-reviews {
-    margin-top: 20px;
+/* ------ INDIVIDUAL REVIEWS ------ */
+.reviews-container .user-reviews {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
+
+.user-reviews .review {
+    width: 50%;
+    border: 2px solid red;
+}
+
+.review .stars-date {
+    display: flex;
+    flex: row;
+
+    gap
+}
+/* ------ ------------------ ------ */
 
 .no-reviews {
     margin-top: 20px;

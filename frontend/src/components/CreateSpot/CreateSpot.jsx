@@ -80,7 +80,7 @@ function CreateSpot() {
     return (
         <form className="create-spot-form" onSubmit={onSubmit} noValidate>
             <div className='form-title-container'>
-                <h1>Create a spot</h1>
+                <h1>Create a new spot</h1>
             </div>
             <section className='location-section'>
                 <h3>Where&apos;s your place located?</h3>
