@@ -4,7 +4,15 @@
 }
 
 .spot-details .title-container {
-    border: 2px solid red;
+}
+
+.spot-details .spot-name {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.spot-details .spot-location {
+    font-size: 20px;
 }
 
 .images-container {
@@ -20,7 +28,7 @@
 
 .main-image-container {
     position: relative;
-    width: 770px;
+    width: 772px;
 }
 
 .main-image {

@@ -56,9 +56,9 @@ function SpotDetail() {
         if (spot.numReviews < 1) {
             return '';
         } else if (spot.numReviews === 1) {
-            return '* 1 review';
+            return '• 1 review';
         } else {
-            return `* ${spot.numReviews} reviews`;
+            return `• ${spot.numReviews} reviews`;
         }
     }
 

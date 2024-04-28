@@ -19,7 +19,6 @@ function CreateSpot() {
     const [imageURLs, setImageURLs] = useState(['', '', '', '']);
     const [previewImageURL, setPreviewImageURL] = useState(['']);
     const [errors, setErrors] = useState([]);
-    const [submitted, setSubmitted] = useState(false);
 
     const validateForm = () => {
         const newErrors = {};
@@ -51,7 +50,6 @@ function CreateSpot() {
     async function onSubmit(e) {
         e.preventDefault();
         if (!validateForm()) {
-            setSubmitted(true);
             return;
         }
 
@@ -77,7 +75,7 @@ function CreateSpot() {
         await Promise.all(imagePromises);
 
         navigate(`/spots/${newSpot.id}`);
-    };
+    }
 
     return (
         <form className="create-spot-form" onSubmit={onSubmit} noValidate>
