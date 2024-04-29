@@ -15,6 +15,7 @@ function ConfirmDeleteModal({ spotId }) {
     return (
         <div className='confirm-delete-container'>
             <h2>Confirm Delete</h2>
+            {/* <div className='divider'></div> */}
             <p>Are you sure you want to remove this spot from the listings?</p>
             <div className='confirm-or-not-buttons'>
                 <button onClick={handleDelete} className='delete-button'>Yes, delete my spot</button>

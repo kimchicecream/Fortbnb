@@ -1,0 +1,54 @@
+.confirm-delete-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    color: rgb(138, 43, 226);
+    gap: 10px;
+}
+
+/* ------------------------------------ */
+
+/* .confirm-delete-container .divider {
+    height: 2px;
+    width: 100%;
+    margin: 10px 0 0;
+    background-color: rgba(137, 43, 226, 0.178);
+} */
+
+/* ------------------------------------ */
+
+.confirm-or-not-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+.confirm-or-not-buttons .delete-button, .cancel-delete-button {
+    all: unset;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    width: 170px;
+    display: flex;
+    justify-content: center;
+}
+
+.confirm-or-not-buttons .delete-button {
+    background-color: rgb(255, 94, 94);
+}
+
+.confirm-or-not-buttons .cancel-delete-button {
+    background-color: rgb(138, 43, 226);
+}
+
+.confirm-or-not-buttons .delete-button:hover {
+    background-color: rgb(183, 0, 0);
+}
+
+.confirm-or-not-buttons .cancel-delete-button:hover {
+    background-color: rgb(220, 183, 255);
+    color: rgb(138, 43, 226);
+}
