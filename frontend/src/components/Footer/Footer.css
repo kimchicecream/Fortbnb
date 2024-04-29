@@ -1,0 +1,32 @@
+.footer-container {
+    position: relative;
+    bottom: 0;
+
+    background-color: rgba(137, 43, 226, 0.656);
+    height: 100px;
+    width: 100%;
+    /* padding-top: 50px; */
+    margin-top: 300px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    padding-right: 80px;
+    gap: 10px;
+}
+
+.footer-container img {
+    height: 25px;
+    padding-bottom: 3px;
+}
+
+.footer-container button {
+    all: unset;
+
+    color: black;
+}
+
+.footer-container button:hover {
+    color: white;
+}

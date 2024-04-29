@@ -9,6 +9,7 @@ import { getReviewsForSpotsById } from '../../store/reviews';
 import OpenModalButton from '../OpenModalButton';
 import ReviewFormModal from '../ReviewFormModal/ReviewFormModal';
 import ReviewDeleteModal from '../ReviewDeleteModal/ReviewDeleteModal';
+import Footer from '../Footer/Footer';
 
 function SpotDetail() {
     const dispatch = useDispatch();
@@ -193,6 +194,7 @@ function SpotDetail() {
                     </div>
                 </div>
             )}
+            <Footer />
         </>
     )
 }

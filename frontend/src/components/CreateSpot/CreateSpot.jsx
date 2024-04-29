@@ -97,110 +97,112 @@ function CreateSpot() {
     };
 
     return (
-        <form className="create-spot-form" onSubmit={onSubmit} noValidate>
-            <div className='create-title-section'>
-                <h1>Create a new spot</h1>
-            </div>
-
-            <div className='line'></div>
-
-            <section className='location-section'>
-                <h3>Where&apos;s your place located?</h3>
-                <p>Guests will only get your exact address once they booked a reservation</p>
-                <div className='input-area'>
-                    <div className='country-form'>
-                        <p>Country {errors.country && <span className="error">{errors.country}</span>}</p>
-                        <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder="Country" />
-                    </div>
-                    <div className='address-form'>
-                        <p>Street Address {errors.address && <span className="error">{errors.address}</span>}</p>
-                        <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Street Address" />
-                    </div>
-                    <div className='city-form'>
-                        <p>City {errors.city && <span className="error">{errors.city}</span>}</p>
-                        <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
-                    </div>
-                    <div className='state-form'>
-                        <p>State {errors.state && <span className="error">{errors.state}</span>}</p>
-                        <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder="State" />
-                    </div>
+        <>
+            <form className="create-spot-form" onSubmit={onSubmit} noValidate>
+                <div className='create-title-section'>
+                    <h1>Create a new spot</h1>
                 </div>
-            </section>
 
-            <div className='line'></div>
+                <div className='line'></div>
 
-            <section className='description-section'>
-                <h3>Describe your place to guests</h3>
-                <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood</p>
-                <div className='input-area'>
-                    <div className='description-form'>
-                        <p>Describe your place {errors.description && <span className="error">{errors.description}</span>}</p>
-                            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Please write at least 30 characters" />
+                <section className='location-section'>
+                    <h3>Where&apos;s your place located?</h3>
+                    <p>Guests will only get your exact address once they booked a reservation</p>
+                    <div className='input-area'>
+                        <div className='country-form'>
+                            <p>Country {errors.country && <span className="error">{errors.country}</span>}</p>
+                            <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} placeholder="Country" />
+                        </div>
+                        <div className='address-form'>
+                            <p>Street Address {errors.address && <span className="error">{errors.address}</span>}</p>
+                            <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Street Address" />
+                        </div>
+                        <div className='city-form'>
+                            <p>City {errors.city && <span className="error">{errors.city}</span>}</p>
+                            <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="City" />
+                        </div>
+                        <div className='state-form'>
+                            <p>State {errors.state && <span className="error">{errors.state}</span>}</p>
+                            <input type="text" value={state} onChange={(e) => setState(e.target.value)} placeholder="State" />
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <div className='line'></div>
+                <div className='line'></div>
 
-            <section className='title-section'>
-                <h3>Create a title for your spot</h3>
-                <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
-                <div className='input-area'>
-                    <div>
-                        <p>Spot Title {errors.name && <span className="error">{errors.name}</span>}</p>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name of your spot" />
+                <section className='description-section'>
+                    <h3>Describe your place to guests</h3>
+                    <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood</p>
+                    <div className='input-area'>
+                        <div className='description-form'>
+                            <p>Describe your place {errors.description && <span className="error">{errors.description}</span>}</p>
+                                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Please write at least 30 characters" />
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <div className='line'></div>
+                <div className='line'></div>
 
-            <section className='price-section'>
-                <h3>Set a base price for your spot</h3>
-                <p>Competitive pricing can help your listing stand out and rank higher in search results</p>
-                <div className='input-area'>
-                    <div>
-                        <p>Price per night {errors.price && <span className="error">{errors.price}</span>}</p>
-                        <input type="number" className='price-input-area' value={price} onWheel={preventScroll} onChange={(e) => setPrice(e.target.value)} placeholder="Price per night (vbucks)" />
+                <section className='title-section'>
+                    <h3>Create a title for your spot</h3>
+                    <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
+                    <div className='input-area'>
+                        <div>
+                            <p>Spot Title {errors.name && <span className="error">{errors.name}</span>}</p>
+                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name of your spot" />
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <div className='line'></div>
+                <div className='line'></div>
 
-            <section className='photos-section'>
-                <h3>Liven up your spot with photos</h3>
-                <p>Submit a link to at least one photo to publish your spot</p>
-                <div className='input-area'>
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Preview Image URL"
-                            value={previewImageURL}
-                            onChange={(e) => setPreviewImageURL(e.target.value)}
-                        />
-                        {errors.previewImageURL && <p className="error">{errors.previewImageURL}</p>}
+                <section className='price-section'>
+                    <h3>Set a base price for your spot</h3>
+                    <p>Competitive pricing can help your listing stand out and rank higher in search results</p>
+                    <div className='input-area'>
+                        <div>
+                            <p>Price per night {errors.price && <span className="error">{errors.price}</span>}</p>
+                            <input type="number" className='price-input-area' value={price} onWheel={preventScroll} onChange={(e) => setPrice(e.target.value)} placeholder="Price per night (vbucks)" />
+                        </div>
                     </div>
-                    {imageURLs.map((url, index) => (
-                        <div key={index}>
+                </section>
+
+                <div className='line'></div>
+
+                <section className='photos-section'>
+                    <h3>Liven up your spot with photos</h3>
+                    <p>Submit a link to at least one photo to publish your spot</p>
+                    <div className='input-area'>
+                        <div>
                             <input
                                 type="text"
-                                placeholder={`Image URL ${index + 1}`}
-                                value={url}
-                                onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                                placeholder="Preview Image URL"
+                                value={previewImageURL}
+                                onChange={(e) => setPreviewImageURL(e.target.value)}
                             />
-                            {errors.imageURLs && errors.imageURLs[index] && <p className="error">{errors.imageURLs[index]}</p>}
+                            {errors.previewImageURL && <p className="error">{errors.previewImageURL}</p>}
                         </div>
-                    ))}
-                </div>
-            </section>
+                        {imageURLs.map((url, index) => (
+                            <div key={index}>
+                                <input
+                                    type="text"
+                                    placeholder={`Image URL ${index + 1}`}
+                                    value={url}
+                                    onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                                />
+                                {errors.imageURLs && errors.imageURLs[index] && <p className="error">{errors.imageURLs[index]}</p>}
+                            </div>
+                        ))}
+                    </div>
+                </section>
 
-            <div className='line'></div>
+                <div className='line'></div>
 
-            <section className='button-section'>
-                <button className='create-spot-button' type="submit">Create Spot</button>
-            </section>
-        </form>
+                <section className='button-section'>
+                    <button className='create-spot-button' type="submit">Create Spot</button>
+                </section>
+            </form>
+        </>
     );
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots, selectAllSpots } from '../../store/spots.js';
 import SpotItem from '../SpotItem/SpotItem.jsx';
+import Footer from '../Footer/Footer.jsx'
 
 import './Home.css';
 
@@ -44,6 +45,7 @@ function Home() {
                             ))}
                         </div>
                     </div>
+                    <Footer />
                 </div>
             )}
         </>
