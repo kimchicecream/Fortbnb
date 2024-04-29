@@ -78,6 +78,7 @@
     border: none;
     padding: 10px;
     background-color: rgb(224, 206, 225);
+    color: rgb(138, 43, 226);
 }
 
 .login-modal-container input:focus {

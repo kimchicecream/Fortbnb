@@ -1,8 +1,104 @@
-.spots-owned-container {
-    border: 2px solid red;
-    margin: 0 60px;
+.manage-spots-container {
+    margin: 0 80px;
+    padding: 10px 0;
+    color: rgb(138, 43, 226);
 
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.manage-spots-container .create-spot-button a {
+    all: unset;
+
+    padding: 10px;
+    background-color: rgb(138, 43, 226);
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.manage-spots-container .create-spot-button a:hover {
+    background-color: rgb(220, 183, 255);
+    color: rgb(138, 43, 226);
+}
+
+.spots-owned-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.display-spots {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 24px;
+}
+
+.spots-owned-container .edit-and-delete-buttons {
     display: flex;
     flex-direction: row;
     justify-content: center;
+
+    gap: 2px;
+
+    padding-top: 10px;
+}
+
+.edit-and-delete-buttons a {
+    all: unset;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(138, 43, 226);
+    border-radius: 10px;
+    width: 50%;
+}
+
+.edit-and-delete-buttons .delete-spot-button {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(255, 94, 94);
+    border-radius: 10px;
+    width: 50%;
+}
+
+.edit-and-delete-buttons a:hover {
+    background-color: rgb(220, 183, 255);
+    color: rgb(138, 43, 226);
+}
+
+.edit-and-delete-buttons .delete-spot-button:hover {
+    background-color: rgb(183, 0, 0);
+}
+
+.manage-spots-container .no-spots {
+    width: 100%;
+    height: 400px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+    font-size: 20px;
+}
+
+.manage-spots-container .no-spots a {
+    color: rgb(138, 43, 226);
 }

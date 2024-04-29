@@ -2,58 +2,137 @@
     color: red;
 }
 
+.create-spot-form .line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(137, 43, 226, 0.178);
+}
+
 .create-spot-form {
-    margin: 20px 500px;
+    margin: 0 80px;
+    color: rgb(138, 43, 226);
+    padding: 10px 0;
 }
 
 .create-spot-form input {
-    width: 100%;
+    all: unset;
+
+    background-color: rgb(224, 206, 225);
+    padding-left: 10px;
+    color: rgb(138, 43, 226);
+
+    width: 400px;
     height: 40px;
+}
+
+.create-spot-form .description-section textarea {
+    all: unset;
+    background-color: rgb(224, 206, 225);
+    padding: 10px;
+    color: rgb(138, 43, 226);
+
+    width: 600px;
+    height: 150px;
 }
 
 .input-area {
     margin-top: 10px;
 }
 
-.input-area  div {
-    margin-top: 10px;
-}
-
-.photos-section > div > input {
+.photos-section input {
     display: flex;
     flex-direction: column;
 }
 
+/* ----- create title section ----- */
+.create-title-section {
+    padding: 0 0 10px 0;
+}
+/* ------------------------- */
+
+/* ----- location section ----- */
+.location-section {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.location-section .input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+/* ---------------------------- */
+
+/* ----- description section ----- */
 .description-section {
-    border-top: 3px solid gray;
-    margin-top: 20px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
 }
 
-.description-section > .input-area > .description-form > textarea {
-    width: 100%;
-    height: 150px;
+.description-section .input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
+/* ---------------------------- */
 
+/* ----- title section ----- */
 .title-section {
-    border-top: 3px solid gray;
-    margin-top: 20px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
 }
+/* ---------------------------- */
 
+/* ----- price section ----- */
 .price-section {
-    border-top: 3px solid gray;
-    margin-top: 20px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
 }
+/* ---------------------------- */
 
+/* ----- photos section ----- */
 .photos-section {
-    border-top: 3px solid gray;
-    margin-top: 20px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
 }
 
-.photos-section > .input-area > div > input {
-    margin-top: 10px;
+.photos-section .input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
+/* ---------------------------- */
 
+/* ----- button section ----- */
 .button-section {
-    border-top: 3px solid gray;
-    margin-top: 20px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
 }
+
+.button-section button {
+    all: unset;
+
+    font-weight: bold;
+    color: white;
+    background-color: rgb(138, 43, 226);
+    padding: 10px 15px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-section button:hover {
+    background-color: rgb(220, 183, 255);
+    color: rgb(138, 43, 226);
+}
+/* ---------------------------- */

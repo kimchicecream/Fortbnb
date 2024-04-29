@@ -67,6 +67,9 @@ function EditSpot() {
             <div className='form-title-container'>
                 <h1>Edit Your Spot</h1>
             </div>
+
+            <div className='line'></div>
+
             <section className='location-section'>
                 <h3>Where&apos;s your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation.</p>
@@ -90,6 +93,8 @@ function EditSpot() {
                 </div>
             </section>
 
+            <div className='line'></div>
+
             <section className='description-section'>
                 <h3>Describe your place to guests</h3>
                 <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
@@ -102,6 +107,8 @@ function EditSpot() {
                 </div>
             </section>
 
+            <div className='line'></div>
+
             <section className='title-section'>
                 <h3>Create a title for your spot</h3>
                 <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
@@ -113,16 +120,20 @@ function EditSpot() {
                 </div>
             </section>
 
+            <div className='line'></div>
+
             <section className='price-section'>
                 <h3>Set a base price for your spot</h3>
                 <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
                 <div className='input-area'>
                     <div>
                         <p>Price per night (USD) {errors.price && <span className="error">{errors.price}</span>}</p>
-                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price per night (USD)" />
+                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price per night (vbucks)" />
                     </div>
                 </div>
             </section>
+
+            <div className='line'></div>
 
             <section className='button-section'>
                 <button className='create-spot-button' type="submit">Confirm Changes</button>

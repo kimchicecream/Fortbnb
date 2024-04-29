@@ -17,11 +17,12 @@ function CreateSpot() {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [imageURLs, setImageURLs] = useState(['', '', '', '']);
-    const [previewImageURL, setPreviewImageURL] = useState(['']);
+    const [previewImageURL, setPreviewImageURL] = useState('');
     const [errors, setErrors] = useState([]);
 
     const validateForm = () => {
-        const newErrors = {};
+        const newErrors = [];
+        let imageURLsErrors = [];
 
         if (!country) newErrors.country = "Country is required";
         if (!address) newErrors.address = "Street Address is required";
@@ -31,10 +32,25 @@ function CreateSpot() {
         if (description.length < 30) newErrors.description = "Description needs 30 or more characters";
         if (!name) newErrors.name = "Spot title is required";
         if (!price) newErrors.price = "Price per night is required";
-        if (!previewImageURL) newErrors.previewImageURL = "Preview Image URL is required";
+        if (!previewImageURL) {
+            newErrors.previewImageURL = "Preview Image URL is required";
+        } else if (previewImageURL && !/\.(jpg|jpeg|png)$/i.test(previewImageURL)) {
+            newErrors.previewImageURL = "Image URL must end in .jpg, .jpeg, or .png";
+        }
+
+        // Validate other image URLs
+        imageURLs.forEach((url, index) => {
+            if (url && !/\.(jpg|jpeg|png)$/i.test(url)) {
+                imageURLsErrors[index] = "Image URL must end in .jpg, .jpeg, or .png";
+            }
+        });
+
+        if (imageURLsErrors.length > 0) {
+            newErrors.imageURLs = imageURLsErrors;
+        }
 
         setErrors(newErrors);
-        return !Object.keys(newErrors).length;
+        return Object.keys(newErrors).length === 0;
     };
 
     useEffect(() => {
@@ -49,9 +65,7 @@ function CreateSpot() {
 
     async function onSubmit(e) {
         e.preventDefault();
-        if (!validateForm()) {
-            return;
-        }
+        if (!validateForm()) return;
 
         const spot = {
             country, address, city, state, description, name, price
@@ -59,8 +73,9 @@ function CreateSpot() {
 
         const newSpot = await dispatch(addSpot(spot));
         if (!newSpot.id) {
-            const { errors } = await newSpot.json();
-            setErrors(errors);
+            if (newSpot.payload && newSpot.payload.errors) {
+                setErrors(newSpot.payload.errors);
+            }
             return;
         }
 
@@ -77,14 +92,21 @@ function CreateSpot() {
         navigate(`/spots/${newSpot.id}`);
     }
 
+    const preventScroll = (event) => {
+        event.preventDefault();
+    };
+
     return (
         <form className="create-spot-form" onSubmit={onSubmit} noValidate>
-            <div className='form-title-container'>
+            <div className='create-title-section'>
                 <h1>Create a new spot</h1>
             </div>
+
+            <div className='line'></div>
+
             <section className='location-section'>
                 <h3>Where&apos;s your place located?</h3>
-                <p>Guests will only get your exact address once they booked a reservation.</p>
+                <p>Guests will only get your exact address once they booked a reservation</p>
                 <div className='input-area'>
                     <div className='country-form'>
                         <p>Country {errors.country && <span className="error">{errors.country}</span>}</p>
@@ -105,21 +127,24 @@ function CreateSpot() {
                 </div>
             </section>
 
+            <div className='line'></div>
+
             <section className='description-section'>
                 <h3>Describe your place to guests</h3>
                 <p>Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood</p>
                 <div className='input-area'>
                     <div className='description-form'>
-                        <p>Describe your place</p>
-                        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Please write at least 30 characters" />
-                        {errors.description && <span className="error">{errors.description}</span>}
+                        <p>Describe your place {errors.description && <span className="error">{errors.description}</span>}</p>
+                            <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Please write at least 30 characters" />
                     </div>
                 </div>
             </section>
 
+            <div className='line'></div>
+
             <section className='title-section'>
                 <h3>Create a title for your spot</h3>
-                <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
+                <p>Catch guests&apos; attention with a spot title that highlights what makes your place special</p>
                 <div className='input-area'>
                     <div>
                         <p>Spot Title {errors.name && <span className="error">{errors.name}</span>}</p>
@@ -128,34 +153,49 @@ function CreateSpot() {
                 </div>
             </section>
 
+            <div className='line'></div>
+
             <section className='price-section'>
                 <h3>Set a base price for your spot</h3>
-                <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                <p>Competitive pricing can help your listing stand out and rank higher in search results</p>
                 <div className='input-area'>
                     <div>
-                        <p>Price per night (USD) {errors.price && <span className="error">{errors.price}</span>}</p>
-                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Price per night (USD)" />
+                        <p>Price per night {errors.price && <span className="error">{errors.price}</span>}</p>
+                        <input type="number" className='price-input-area' value={price} onWheel={preventScroll} onChange={(e) => setPrice(e.target.value)} placeholder="Price per night (vbucks)" />
                     </div>
                 </div>
             </section>
 
+            <div className='line'></div>
+
             <section className='photos-section'>
                 <h3>Liven up your spot with photos</h3>
-                <p>Submit a link to at least one photo to publish your spot.</p>
+                <p>Submit a link to at least one photo to publish your spot</p>
                 <div className='input-area'>
-                    <input type="text" placeholder="Preview Image URL" value={previewImageURL} onChange={(e) => setPreviewImageURL(e.target.value)} />
-                    {errors.imageURLs && <p className="error">{errors.imageURLs}</p>}
-                    {imageURLs.map((url, index) => (
+                    <div>
                         <input
-                            key={index}
                             type="text"
-                            placeholder={`Image URL ${index + 1}`}
-                            value={url}
-                            onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                            placeholder="Preview Image URL"
+                            value={previewImageURL}
+                            onChange={(e) => setPreviewImageURL(e.target.value)}
                         />
+                        {errors.previewImageURL && <p className="error">{errors.previewImageURL}</p>}
+                    </div>
+                    {imageURLs.map((url, index) => (
+                        <div key={index}>
+                            <input
+                                type="text"
+                                placeholder={`Image URL ${index + 1}`}
+                                value={url}
+                                onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                            />
+                            {errors.imageURLs && errors.imageURLs[index] && <p className="error">{errors.imageURLs[index]}</p>}
+                        </div>
                     ))}
                 </div>
             </section>
+
+            <div className='line'></div>
 
             <section className='button-section'>
                 <button className='create-spot-button' type="submit">Create Spot</button>

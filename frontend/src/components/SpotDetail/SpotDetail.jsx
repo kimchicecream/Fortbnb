@@ -117,7 +117,7 @@ function SpotDetail() {
                                     <div className='vbuck-i'>
                                         <img id='vbucks' src='../../../vbucks.png' />
                                     </div>
-                                    <p className='v-price'>{spot.price.toLocaleString()}</p>
+                                    <p className='v-price'>{spot.price.toLocaleString('en-US')}</p>
                                     <p className='per-night'>per night</p>
                                 </div>
                                 <div className='rating-and-star'>
