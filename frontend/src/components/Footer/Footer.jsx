@@ -7,7 +7,7 @@ function Footer() {
 
     return (
         <div className='footer-container'>
-            <img src='../../../public/github.png' />
+            <img src='../../../github.png' />
             <button onClick={handleClick}>See on Github</button>
         </div>
     )
