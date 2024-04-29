@@ -41,7 +41,7 @@ function SpotItem({ spot, children }) {
                 <div className='city-state-price'>
                     <p className='city-state'>{spot.city}, {spot.state}</p>
                     <div className='price-container'>
-                        <img id='vbucks' src='../../../public/vbucks.png' />
+                        <img id='vbucks' src='../../../vbucks.png' />
                         <p className='price'>
                             {spot.price.toLocaleString()} per night
                         </p>

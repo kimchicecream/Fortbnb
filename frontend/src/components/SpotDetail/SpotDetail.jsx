@@ -76,10 +76,6 @@ function SpotDetail() {
     const hasReviews = reviews && Object.keys(reviews).length > 0;
     const userHasReviewed = reviews && Object.values(reviews).some(review => review.userId === sessionUser?.id)
 
-    console.log("Is Loaded:", isLoaded);
-    console.log("Has Reviews:", hasReviews);
-    console.log("User Has Reviewed:", userHasReviewed);
-
     return (
         <>
             {isLoaded && reviews && spot && (
@@ -119,7 +115,7 @@ function SpotDetail() {
                             <div className='price-review'>
                                 <div className='price-container'>
                                     <div className='vbuck-i'>
-                                        <img id='vbucks' src='../../../public/vbucks.png' />
+                                        <img id='vbucks' src='../../../vbucks.png' />
                                     </div>
                                     <p className='v-price'>{spot.price.toLocaleString()}</p>
                                     <p className='per-night'>per night</p>
