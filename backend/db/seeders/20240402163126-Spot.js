@@ -48,7 +48,7 @@ module.exports = {
         lat: 66.2324222,
         lng: -150.3333333,
         name: 'Entire Palace at Mt. Olympus',
-        description: "For just 80,000 vbucks, you can experience a night at the real Mount Olympus. From buildings made of gold, to hedges trimmed to the exact nano-millimeter, you will find the true meaning of perfection. But that is not the it... The view of the statue looms over you as you gaze in awe. Mount Olympus is forbidden to a mortal, but YOU can stay a night for just 80,000 vbucks! Who can honestly say they've been to Mount Olympus? No one! For just 80,000 vbucks, book your night stay! (pls we need the vbucks)",
+        description: "For just 80,000 vbucks, you can experience a night at the real Mount Olympus. From buildings made of gold, to hedges trimmed to the exact nano-millimeter, you will find the true meaning of perfection. But that is not the it... The view of the statue looms over you as you gaze in awe. Mount Olympus is forbidden to a mortal, but YOU can stay a night for just 80,000 vbucks! For just 80,000 vbucks, book your night stay! (pls we need the vbucks)",
         price: 80000
       },
       // Cloistered Castle spotId 4
@@ -87,7 +87,7 @@ module.exports = {
         lat: 62.2324222,
         lng: -119.3333333,
         name: 'Beachside Lodge (Yellow)',
-        description: "Thinking about proposing but don't know where because all the other spots are too popular? Want a peaceful beach experience? Just got married? Honeymoon? Book this place for you and your significant other NOW! This location is the perfect get away location for couples. The home sits on a private beach with two other residents. The residents to the left of you are elderly and quiet so you won't be woken up in the middle of the night to loud music! Absolutely NO parties. Please keep the home and beach clean, as we do our best to provide the best quality service. 20% cleaning fee will be charged upon booking for cleaning services even though we require you to clean. If you dont clean, we'll add another 50% charge. BOOK NOW!",
+        description: "Thinking about proposing but don't know where because all the other spots are too popular? Want a peaceful beach experience? Just got married? Honeymoon? Book this place for you and your significant other NOW! This location is the perfect get away location for couples. The home sits on a private beach with two other residents. The residents to the left of you are elderly and quiet so you won't be woken up in the middle of the night to loud music!",
         price: 130
       },
       // The Ol' Mill spotId 7
