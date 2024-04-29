@@ -13,12 +13,22 @@ module.exports = {
     await SpotImage.bulkCreate([
       {
         spotId: 1,
-        url: 'https://i.postimg.cc/Z5CbFC29/Bunker-Hut-1.webp',
+        url: 'https://i.postimg.cc/zGXGW0PG/Screenshot-2024-02-25-134951.png',
         preview: true
       },
       {
         spotId: 1,
-        url: 'https://i.postimg.cc/Z5CbFC29/Bunker-Hut-1.webp',
+        url: 'https://i.postimg.cc/zGXGW0PG/Screenshot-2024-02-25-134951.png',
+        preview: true
+      },
+      {
+        spotId: 1,
+        url: 'https://i.postimg.cc/zGXGW0PG/Screenshot-2024-02-25-134951.png',
+        preview: true
+      },
+      {
+        spotId: 1,
+        url: 'https://i.postimg.cc/zGXGW0PG/Screenshot-2024-02-25-134951.png',
         preview: true
       },
       {
