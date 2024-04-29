@@ -66,9 +66,9 @@ function SpotDetail() {
         if (stars < 1) {
             return '';
         } else if (stars === 1) {
-            return '1 star';
+            return '1 star •';
         } else {
-            return `${stars} stars`
+            return `${stars} stars •`;
         }
     }
 
@@ -134,7 +134,7 @@ function SpotDetail() {
                         </div>
                     </div>
 
-                    <div className='desc-divider'></div>
+                    <div className='desc-dividerr'></div>
 
                     <div className='reviews-container'>
                         {isLoaded && reviews ? (
@@ -143,16 +143,17 @@ function SpotDetail() {
                                     {displayStar()}
                                     <div className='rating-review'>{displayRating()}</div>
                                 </div>
-                                {/* if there are no reviews */}
-                                {!hasReviews && (
-                                    <div className='no-reviews'>Be the first to post a review!</div>
-                                )}
                                 {/* if there is a sessionUser and user is not the owner and user has not already reviewed */}
                                 {isLoaded  && sessionUser && userIsNotOwner && !userHasReviewed && (
                                     <OpenModalButton
                                         buttonText='Post Your Review'
-                                        modalComponent={<ReviewFormModal user={sessionUser} spotId={spot.id} />}
+                                        className='postreview-button'
+                                        modalComponent={<ReviewFormModal spotId={spot.id} />}
                                     />
+                                )}
+                                {/* if there are no reviews */}
+                                {!hasReviews && (
+                                    <div className='no-reviews'>Be the first to post a review!</div>
                                 )}
                                 <div className='user-reviews'>
                                     {reviews && Object.values(reviews).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -167,6 +168,7 @@ function SpotDetail() {
                                                 {sessionUser && sessionUser.id === review.userId && (
                                                     <OpenModalButton
                                                         buttonText='Delete'
+                                                        className='delete-review-button'
                                                         modalComponent={<ReviewDeleteModal reviewId={review.id} spotId={spot.id} />}
                                                     />
                                                 )}
@@ -179,14 +181,13 @@ function SpotDetail() {
                             <>
                                 <div className='rating-reviews'>
                                     {displayStar()}
-                                    <div className='rating-review'>
-                                        {displayRating()}
-                                    </div>
+                                    <div className='rating-review'>{displayRating()}</div>
                                 </div>
                                 {/* if a session user is logged in and isn't the owner of the spot and hasnt already reviewed */}
                                 {sessionUser && userIsNotOwner && !userHasReviewed && (
                                     <OpenModalButton
                                         buttonText='Post Your Review'
+                                        className='postreview-button'
                                         modalComponent={<ReviewFormModal spotId={spot.id} />}
                                     />
                                 )}

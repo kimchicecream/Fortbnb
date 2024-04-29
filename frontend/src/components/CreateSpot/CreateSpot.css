@@ -2,11 +2,11 @@
     color: red;
 }
 
-form {
+.create-spot-form {
     margin: 20px 500px;
 }
 
-input {
+.create-spot-form input {
     width: 100%;
     height: 40px;
 }

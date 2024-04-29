@@ -141,7 +141,7 @@
 .price-container .per-night {
     font-size: 20px;
     font-weight: normal;
-    margin-bottom: 2.2px;
+    margin-bottom: 2.3px;
     margin-left: 4px;
 }
 
@@ -149,8 +149,6 @@
     height: 21px;
     margin-right: 3px;
 }
-/* --------------------------- */
-
 
 .rating-and-star {
     display: flex;
@@ -159,11 +157,9 @@
     font-size: 20px
 }
 
-.reserve-container .desc-divider {
-    height: 2px;
-    width: 100%;
-    margin: 10px 0;
-    background-color: rgba(242, 224, 244, 0.348);
+.rating-and-star .star-details {
+    max-width: 24px;
+    max-height: 24px;
 }
 
 .rating.new {
@@ -171,8 +167,17 @@
     font-style: italic;
     padding-right: 9px;
 }
+/* --------------------------- */
+
+.reserve-container .desc-divider {
+    height: 2px;
+    width: 100%;
+    margin: 10px 0;
+    background-color: rgb(242, 224, 244);
+}
 
 /* ------- BUTTON ------- */
+
 .reserve-container button {
     all: unset;
 
@@ -190,12 +195,12 @@
 }
 
 .reserve-container button:hover {
-    background-color: rgb(198, 138, 255);
-    color: rgb(242, 224, 244);
+    background-color: rgb(220, 183, 255);
+    color: rgb(138, 43, 226);
 }
 /* ---------------------- */
 
-.spot-details .desc-divider {
+.spot-details .desc-dividerr {
     height: 2px;
     width: 100%;
     margin: 10px 0;
@@ -204,9 +209,9 @@
 
 /* ------ REVIEWS CONTAINER ------ */
 .reviews-container {
-    padding: 20px 0;
+    padding: 0 0 20px 0;
 
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
 
 .rating-reviews {
@@ -214,9 +219,53 @@
     flex-direction: row;
 }
 
-.star-details {
-    max-width: 24px;
-    max-height: 24px;
+/* -- NO REVIEWS -- */
+.rating-reviews .rating.new {
+    font-size: 30px;
+}
+
+.reviews-container .no-reviews {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    border: 2px solid red;
+    font-size: 30px;
+}
+/* -- ---------- -- */
+
+/* -- POST REVIEW BUTTON -- */
+.reviews-container .postreview-button {
+    all: unset;
+    color: white;
+    padding: 10px 15px;
+    background-color: rgb(138, 43, 226);
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+.reviews-container .postreview-button:hover {
+    background-color: rgb(220, 183, 255);
+    color: rgb(138, 43, 226);
+}
+/* -- ------------------ -- */
+
+.reviews-container .rating-reviews {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+.reviews-container .rating-reviews .rating-review {
+    margin-top: 6px;
+}
+
+.rating-reviews .star-details {
+    max-width: 40px;
+    max-height: 40px;
 }
 
 /* ------ INDIVIDUAL REVIEWS ------ */
@@ -229,14 +278,38 @@
 
 .user-reviews .review {
     width: 50%;
-    border: 2px solid red;
+    padding: 10px 0;
+    /* border: 2px solid red; */
 }
 
 .review .stars-date {
     display: flex;
     flex: row;
 
-    gap
+    gap: 5px;
+}
+
+.user-reviews .review-owner {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.user-reviews .review-text {
+    font-size: 20px;
+}
+
+.user-reviews .delete-review-button {
+    all: unset;
+    padding: 5px 10px;
+    background-color: rgb(138, 43, 226);;
+    color: rgb(242, 224, 244);
+    border-radius: 5px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.user-reviews .delete-review-button:hover {
+    background-color: rgb(255, 94, 94);
 }
 /* ------ ------------------ ------ */
 

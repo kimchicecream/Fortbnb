@@ -35,25 +35,36 @@ function ReviewFormModal({ spotId }) {
     }
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)} className='review-form-container'>
+        <div className='review-form-container'>
             <div className='review-form-title-container'>
-                <h1>How was your stay?</h1>
+                    <h1>How was your stay?</h1>
             </div>
-            <textarea
-                value={reviewText}
-                onChange={(e) => setReviewText(e.target.value)}
-                placeholder='Leave your review here...'
-            />
-            <div className='star-rating-container'>
-                {[1, 2, 3, 4, 5].map((num) => (
-                    <span key={num} onClick={() => updateStars(num)} style={{ color: num <= stars ? 'gold' : 'gray' }}>
-                        *
-                    </span>
-                ))}
-            </div>
-            {error && <div className="error-message">{error}</div>}
-            <button type="submit" disabled={!canSubmit}>Submit Your Review</button>
-        </form>
+
+            <div className='divider'></div>
+
+            <form className='review-form' onSubmit={(e) => handleSubmit(e)}>
+                <div className='star-rating-container'>
+                    {[1, 2, 3, 4, 5].map((num) => (
+                        <img
+                            key={num}
+                            className='gray-full-stars'
+                            src={num <= stars ? '../../../public/stars/4.6above.png' : '../../../public/stars/graystar.png'}
+                            onClick={() => updateStars(num)}
+                            alt={`${num} Star`}
+                        />
+                    ))}<p>stars</p>
+                </div>
+                <div className='review-form-bottom'>
+                    <textarea
+                        value={reviewText}
+                        onChange={(e) => setReviewText(e.target.value)}
+                        placeholder='Leave your review here...'
+                    />
+                    {error && <div className="error-message">{error}</div>}
+                    <button type="submit" disabled={!canSubmit}>Submit Your Review</button>
+                </div>
+            </form>
+        </div>
     )
 }
 
