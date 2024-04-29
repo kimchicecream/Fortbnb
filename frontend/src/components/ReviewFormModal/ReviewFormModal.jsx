@@ -48,7 +48,7 @@ function ReviewFormModal({ spotId }) {
                         <img
                             key={num}
                             className='gray-full-stars'
-                            src={num <= stars ? '../../../public/stars/4.6above.png' : '../../../public/stars/graystar.png'}
+                            src={num <= stars ? '../../../stars/4.6above.png' : '../../../stars/graystar.png'}
                             onClick={() => updateStars(num)}
                             alt={`${num} Star`}
                         />
