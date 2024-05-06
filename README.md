@@ -3,58 +3,6 @@
 ## Database Schema Design
 ![db-schema](images/fortbnb-schema-design.png)
 
-Table Users {
-  id int [primary key]
-  firstName varchar
-  lastName varchar
-  email varchar
-  username varchar
-  hashedPassword varchar
-}
-
-Table Spots {
-  id int [primary key]
-  ownerId int
-  address varchar
-  city varchar
-  state varchar
-  country varchar
-  lat decimal
-  lng decimal
-  name varchar
-  description text
-  price decimal
-}
-
-Table Bookings {
-  id int [primary key]
-  spotId int
-  userId int
-  startDate date
-  endDate date
-}
-
-Table Reviews {
-  id int [primary key]
-  spotId int
-  userId int
-  review varchar
-  stars int
-}
-
-Table SpotImages {
-  id int [primary key]
-  spotId int
-  url varchar
-  preview boolean
-}
-
-Table ReviewImages {
-  id int [primary key]
-  reviewId int
-  url varchar
-}
-
 ## API Documentation
 
 ## USER AUTHENTICATION/AUTHORIZATION
@@ -1502,6 +1450,57 @@ Return spots filtered by query parameters.
       }
     }
     ```
+Table Users {
+  id int [primary key]
+  firstName varchar
+  lastName varchar
+  email varchar
+  username varchar
+  hashedPassword varchar
+}
+
+Table Spots {
+  id int [primary key]
+  ownerId int
+  address varchar
+  city varchar
+  state varchar
+  country varchar
+  lat decimal
+  lng decimal
+  name varchar
+  description text
+  price decimal
+}
+
+Table Bookings {
+  id int [primary key]
+  spotId int
+  userId int
+  startDate date
+  endDate date
+}
+
+Table Reviews {
+  id int [primary key]
+  spotId int
+  userId int
+  review varchar
+  stars int
+}
+
+Table SpotImages {
+  id int [primary key]
+  spotId int
+  url varchar
+  preview boolean
+}
+
+Table ReviewImages {
+  id int [primary key]
+  reviewId int
+  url varchar
+}
 
 Ref: Spots.ownerId > Users.id
 Ref: Bookings.spotId > Spots.id
