@@ -1,4 +1,4 @@
-# `FortBnB`
+# `Fortbnb`
 
 ## Database Schema Design
 ![db-schema](images/fortbnb-schema-design.png)
@@ -54,14 +54,6 @@ Table ReviewImages {
   reviewId int
   url varchar
 }
-
-Ref: Spots.ownerId > Users.id
-Ref: Bookings.spotId > Spots.id
-Ref: Bookings.userId > Users.id
-Ref: Reviews.spotId > Spots.id
-Ref: Reviews.userId > Users.id
-Ref: SpotImages.spotId > Spots.id
-Ref: ReviewImages.reviewId > Reviews.id
 
 ## API Documentation
 
@@ -1510,3 +1502,12 @@ Return spots filtered by query parameters.
       }
     }
     ```
+
+Ref: Spots.ownerId > Users.id
+Ref: Bookings.spotId > Spots.id
+Ref: Bookings.userId > Users.id
+Ref: Reviews.spotId > Spots.id
+Ref: Reviews.userId > Users.id
+Ref: SpotImages.spotId > Spots.id
+Ref: ReviewImages.reviewId > Reviews.id
+
